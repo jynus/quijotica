@@ -1,8 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://sb21nf2wf7if"]
+[gd_scene load_steps=9 format=3 uid="uid://sb21nf2wf7if"]
 
 [ext_resource type="Script" path="res://GameLoop.gd" id="1_g4qhq"]
 [ext_resource type="FontFile" uid="uid://cdfafwjg3xnk2" path="res://assets/Don_Quixote.ttf" id="2_exqfm"]
 [ext_resource type="FontFile" uid="uid://c1xq7d3mhuvt5" path="res://assets/Guttenbg.ttf" id="3_chick"]
+[ext_resource type="Script" path="res://Gift.gd" id="4_semax"]
+[ext_resource type="PackedScene" uid="uid://b0moxwhs6be06" path="res://StartMenu.tscn" id="5_igfx2"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_f3vrk"]
 font = ExtResource("3_chick")
@@ -28,9 +30,21 @@ color = Color(0.980453, 0.980453, 0.980453, 1)
 
 [node name="Counter" type="Label" parent="Background"]
 unique_name_in_owner = true
+layout_mode = 0
 offset_right = 800.0
 offset_bottom = 176.0
 text = "372 802 de 372 802"
+label_settings = SubResource("LabelSettings_f3vrk")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="User" type="Label" parent="Background"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_top = 624.0
+offset_right = 800.0
+offset_bottom = 800.0
+text = "Esperando chat..."
 label_settings = SubResource("LabelSettings_f3vrk")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -85,8 +99,15 @@ text = "Merced"
 label_settings = SubResource("LabelSettings_4xpe7")
 vertical_alignment = 1
 
-[node name="TestTimer" type="Timer" parent="."]
-wait_time = 2.0
-autostart = true
+[node name="Gift" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("4_semax")
+disk_cache = true
 
-[connection signal="timeout" from="TestTimer" to="." method="_on_test_timer_timeout"]
+[node name="start_menu" parent="." instance=ExtResource("5_igfx2")]
+unique_name_in_owner = true
+visible = false
+
+[connection signal="chat_message" from="Gift" to="." method="_on_gift_chat_message"]
+[connection signal="twitch_connected" from="Gift" to="." method="_on_gift_twitch_connected"]
+[connection signal="connect" from="start_menu" to="." method="_on_start_menu_connect"]

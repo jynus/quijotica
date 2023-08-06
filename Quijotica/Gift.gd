@@ -1,9 +1,9 @@
 extends Gift
 
-func _ready() -> void:
+func setup() -> void:
 	cmd_no_permission.connect(no_permission)
-	chat_message.connect(on_chat)
-	event.connect(on_event)
+	#chat_message.connect(on_chat)
+	#event.connect(on_event)
 
 	# I use a file in the working directory to store auth data
 	# so that I don't accidentally push it to the repository.

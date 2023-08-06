@@ -1,5 +1,6 @@
 extends Node2D
 
+# text stuff
 var text : PackedStringArray = PackedStringArray()
 var line : String
 var line_count : int = 0
@@ -20,7 +21,7 @@ func format_integer(number: int, thousands_separator: String = " ") -> String:
 	return formatted_number
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func do_text_stuff():
 	var text_file = FileAccess.open("res://texts/don_quixote.txt",FileAccess.READ)
 	regex.compile("\\p{L}+")
 	while not text_file.eof_reached():
@@ -39,11 +40,12 @@ func _ready():
 	line_count = 0
 	word = text[0]
 	%PreviousWord.text = ""
-	for word in text:
+	for current_word in text:
 		%Counter.text = format_integer(word_count) + " de " + format_integer(total_words)
 		if word_count > 0:
 			%PreviousWord.text = text[word_count - 1]
-		%Word.text = text[word_count]
+		word = text[word_count]
+		%Word.text = word
 		if word_count < total_words:
 			%NextWord.text = text[word_count + 1]
 		else:
@@ -51,11 +53,25 @@ func _ready():
 		await correct_word
 		word_count += 1
 
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	do_text_stuff()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
 
 
-func _on_test_timer_timeout():
-	correct_word.emit()
+
+func _on_start_menu_connect():
+	%Gift.setup()
+
+
+func _on_gift_twitch_connected():
+	%start_menu.hide()
+
+
+func _on_gift_chat_message(sender_data, message):
+	if message == word:
+		correct_word.emit()
+		%User.text = sender_data.tags["display-name"]
