@@ -1,0 +1,77 @@
+[gd_scene load_steps=8 format=3 uid="uid://b0moxwhs6be06"]
+
+[ext_resource type="Texture2D" uid="uid://lymqpgvs3m44" path="res://assets/Don_Quixote_fighting_windmills.jpg" id="1_0xyxc"]
+[ext_resource type="Script" path="res://Menu.gd" id="1_cyngt"]
+[ext_resource type="FontFile" uid="uid://c1xq7d3mhuvt5" path="res://assets/Guttenbg.ttf" id="2_p7aje"]
+[ext_resource type="FontFile" uid="uid://cdfafwjg3xnk2" path="res://assets/Don_Quixote.ttf" id="3_8jn5h"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_eolrg"]
+font = ExtResource("2_p7aje")
+font_size = 119
+font_color = Color(0.0235294, 0.0235294, 0.0235294, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_881uq"]
+font = ExtResource("3_8jn5h")
+font_size = 65
+font_color = Color(0.0235294, 0.0235294, 0.0235294, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lh5sb"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_size = 10
+
+[node name="start_menu" type="Node2D"]
+script = ExtResource("1_cyngt")
+
+[node name="Background" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(800, 800)
+color = Color(0.980453, 0.980453, 0.980453, 1)
+
+[node name="Image" type="Sprite2D" parent="Background"]
+position = Vector2(20, 221)
+scale = Vector2(0.63788, 0.63788)
+texture = ExtResource("1_0xyxc")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 1195.3, 880)
+
+[node name="Title" type="Label" parent="Background"]
+layout_mode = 0
+offset_right = 800.0
+offset_bottom = 176.0
+text = "QUIJÓTICA"
+label_settings = SubResource("LabelSettings_eolrg")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Tagline" type="Label" parent="Background"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -224.0
+offset_bottom = -117.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Una idea original de Jynus"
+label_settings = SubResource("LabelSettings_881uq")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="Background"]
+layout_mode = 0
+offset_left = 473.0
+offset_top = 305.0
+offset_right = 717.0
+offset_bottom = 383.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_p7aje")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxFlat_lh5sb")
+text = "Enclavijar"
+
+[connection signal="pressed" from="Background/Button" to="." method="_on_button_pressed"]

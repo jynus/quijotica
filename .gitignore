@@ -16,3 +16,6 @@ mono_crash.*.json
 
 # Twitch secrets
 auth
+
+# builds
+builds
