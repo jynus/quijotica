@@ -1,0 +1,181 @@
+[gd_scene load_steps=7 format=3 uid="uid://du6qo5hn23re2"]
+
+[ext_resource type="Script" path="res://Ranking.gd" id="1_etsof"]
+[ext_resource type="FontFile" uid="uid://c1xq7d3mhuvt5" path="res://assets/Guttenbg.ttf" id="2_ig3vd"]
+[ext_resource type="FontFile" uid="uid://cdfafwjg3xnk2" path="res://assets/Don_Quixote.ttf" id="3_gmadr"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_d87yp"]
+font = ExtResource("2_ig3vd")
+font_size = 100
+font_color = Color(0.0235294, 0.0235294, 0.0235294, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_b7gfs"]
+font = ExtResource("2_ig3vd")
+font_size = 60
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_tssdt"]
+font = ExtResource("3_gmadr")
+font_size = 100
+font_color = Color(0, 0, 0, 1)
+
+[node name="Ranking" type="Node2D"]
+script = ExtResource("1_etsof")
+
+[node name="Background" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(800, 800)
+offset_right = 800.0
+offset_bottom = 800.0
+color = Color(0.980392, 0.980392, 0.980392, 1)
+
+[node name="StatsTitle" type="Label" parent="Background"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 800.0
+offset_bottom = 176.0
+text = "Clasificación"
+label_settings = SubResource("LabelSettings_d87yp")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BackButton" type="Button" parent="."]
+offset_left = 40.0
+offset_top = 53.0
+offset_right = 154.0
+offset_bottom = 129.0
+text = "Atrás"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_top = 166.0
+offset_right = 4800.0
+offset_bottom = 744.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TopWords" type="VBoxContainer" parent="HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(800, 0)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="HBoxContainer/TopWords"]
+layout_mode = 2
+text = "Más palabras correctas"
+label_settings = SubResource("LabelSettings_b7gfs")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Faster" type="VBoxContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(800, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/Faster"]
+layout_mode = 2
+text = "Más rápidos"
+label_settings = SubResource("LabelSettings_b7gfs")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer/Faster"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/Faster/HBoxContainer2"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="Top1" type="Label" parent="HBoxContainer/Faster/HBoxContainer2"]
+layout_mode = 2
+text = "Jynus ..................... 100"
+label_settings = SubResource("LabelSettings_tssdt")
+
+[node name="MarginContainer2" type="MarginContainer" parent="HBoxContainer/Faster/HBoxContainer2"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="LeastErrors" type="VBoxContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(800, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/LeastErrors"]
+layout_mode = 2
+text = "Menos errores"
+label_settings = SubResource("LabelSettings_b7gfs")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer/LeastErrors"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/LeastErrors/HBoxContainer2"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="Top1" type="Label" parent="HBoxContainer/LeastErrors/HBoxContainer2"]
+layout_mode = 2
+text = "Jynus .......................... 100"
+label_settings = SubResource("LabelSettings_tssdt")
+
+[node name="MarginContainer2" type="MarginContainer" parent="HBoxContainer/LeastErrors/HBoxContainer2"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="MostErrors" type="VBoxContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(800, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/MostErrors"]
+layout_mode = 2
+text = "Más errores"
+label_settings = SubResource("LabelSettings_b7gfs")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer/MostErrors"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/MostErrors/HBoxContainer2"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="Top1" type="Label" parent="HBoxContainer/MostErrors/HBoxContainer2"]
+layout_mode = 2
+text = "Jynus .......................... 100"
+label_settings = SubResource("LabelSettings_tssdt")
+
+[node name="MarginContainer2" type="MarginContainer" parent="HBoxContainer/MostErrors/HBoxContainer2"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="GlobalRanking" type="VBoxContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(800, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/GlobalRanking"]
+layout_mode = 2
+text = "Streamers"
+label_settings = SubResource("LabelSettings_b7gfs")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer/GlobalRanking"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/GlobalRanking/HBoxContainer2"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="Top1" type="Label" parent="HBoxContainer/GlobalRanking/HBoxContainer2"]
+layout_mode = 2
+text = "Jynus .......................... 100"
+label_settings = SubResource("LabelSettings_tssdt")
+
+[node name="MarginContainer2" type="MarginContainer" parent="HBoxContainer/GlobalRanking/HBoxContainer2"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]

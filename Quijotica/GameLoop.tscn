@@ -1,9 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://sb21nf2wf7if"]
+[gd_scene load_steps=11 format=3 uid="uid://sb21nf2wf7if"]
 
 [ext_resource type="Script" path="res://GameLoop.gd" id="1_g4qhq"]
 [ext_resource type="FontFile" uid="uid://cdfafwjg3xnk2" path="res://assets/Don_Quixote.ttf" id="2_exqfm"]
 [ext_resource type="FontFile" uid="uid://c1xq7d3mhuvt5" path="res://assets/Guttenbg.ttf" id="3_chick"]
+[ext_resource type="PackedScene" uid="uid://y51wof4qdj5u" path="res://Overlay.tscn" id="4_nvca3"]
 [ext_resource type="Script" path="res://Gift.gd" id="4_semax"]
+[ext_resource type="PackedScene" uid="uid://du6qo5hn23re2" path="res://Ranking.tscn" id="5_3lwqm"]
 [ext_resource type="PackedScene" uid="uid://b0moxwhs6be06" path="res://StartMenu.tscn" id="5_igfx2"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_f3vrk"]
@@ -26,7 +28,7 @@ script = ExtResource("1_g4qhq")
 
 [node name="Background" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(800, 800)
-color = Color(0.980453, 0.980453, 0.980453, 1)
+color = Color(0.980392, 0.980392, 0.980392, 1)
 
 [node name="Counter" type="Label" parent="Background"]
 unique_name_in_owner = true
@@ -44,7 +46,7 @@ layout_mode = 0
 offset_top = 624.0
 offset_right = 800.0
 offset_bottom = 800.0
-text = "Esperando chat..."
+text = "Aguardando ruines..."
 label_settings = SubResource("LabelSettings_f3vrk")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -80,7 +82,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 5
-text = "vuestra"
+text = "Q"
 label_settings = SubResource("LabelSettings_xisbo")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -99,6 +101,14 @@ text = "Merced"
 label_settings = SubResource("LabelSettings_4xpe7")
 vertical_alignment = 1
 
+[node name="Overlay" parent="." instance=ExtResource("4_nvca3")]
+unique_name_in_owner = true
+visible = false
+
+[node name="Ranking" parent="." instance=ExtResource("5_3lwqm")]
+unique_name_in_owner = true
+visible = false
+
 [node name="Gift" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("4_semax")
@@ -108,6 +118,11 @@ disk_cache = true
 unique_name_in_owner = true
 visible = false
 
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[connection signal="exit" from="Overlay" to="." method="_on_overlay_exit"]
+[connection signal="show_stats" from="Overlay" to="." method="_on_overlay_show_stats"]
 [connection signal="chat_message" from="Gift" to="." method="_on_gift_chat_message"]
-[connection signal="twitch_connected" from="Gift" to="." method="_on_gift_twitch_connected"]
+[connection signal="joined_chatroom" from="Gift" to="." method="_on_gift_joined_chatroom"]
+[connection signal="tree_exited" from="Gift" to="." method="_on_gift_tree_exited"]
 [connection signal="connect" from="start_menu" to="." method="_on_start_menu_connect"]

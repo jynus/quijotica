@@ -1,0 +1,44 @@
+[gd_scene load_steps=4 format=3 uid="uid://dor62uapm50p7"]
+
+[ext_resource type="FontFile" uid="uid://cdfafwjg3xnk2" path="res://assets/Don_Quixote.ttf" id="1_meld7"]
+[ext_resource type="Script" path="res://ranking_line.gd" id="1_qldq2"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_tssdt"]
+font = ExtResource("1_meld7")
+font_size = 100
+font_color = Color(0, 0, 0, 1)
+
+[node name="line" type="HBoxContainer"]
+size_flags_horizontal = 8
+size_flags_vertical = 0
+script = ExtResource("1_qldq2")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+
+[node name="User" type="Label" parent="."]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Jynus"
+label_settings = SubResource("LabelSettings_tssdt")
+
+[node name="Dots" type="Label" parent="."]
+clip_contents = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = " ......... "
+label_settings = SubResource("LabelSettings_tssdt")
+horizontal_alignment = 1
+
+[node name="Value" type="Label" parent="."]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+text = "100000"
+label_settings = SubResource("LabelSettings_tssdt")
+
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2

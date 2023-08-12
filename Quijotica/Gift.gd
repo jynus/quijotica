@@ -1,5 +1,8 @@
 extends Gift
 
+signal joined_chatroom
+signal left_chatroom
+
 func setup() -> void:
 	cmd_no_permission.connect(no_permission)
 	#chat_message.connect(on_chat)
@@ -13,9 +16,9 @@ func setup() -> void:
 	# <client_secret>
 	# (it will try to connect to the channel owned by the
 	# authenticated account)
-	var authfile := FileAccess.open("./auth", FileAccess.READ)
-	client_id = authfile.get_line().strip_edges()
-	client_secret = authfile.get_line().strip_edges()
+	var authfile := FileAccess.open("res://auth.txt", FileAccess.READ)
+	client_id = Auth.client_id
+	client_secret = Auth.secret
 
 	# When calling this method, a browser will open.
 	# Log in to the account that should be used.
@@ -23,7 +26,8 @@ func setup() -> void:
 	var success = await(connect_to_irc())
 	if (success):
 		request_caps()
-		join_channel(username)
+		await join_channel(username)
+		joined_chatroom.emit()
 	#await(connect_to_eventsub())
 	# Refer to https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/ for details on
 	# what events exist, which API versions are available and which conditions are required.
@@ -112,3 +116,7 @@ func list(cmd_info : CommandInfo, arg_ary : PackedStringArray) -> void:
 		msg += ", "
 	msg += arg_ary[arg_ary.size() - 1]
 	chat(msg)
+
+func leave():
+	leave_channel(username)
+	left_chatroom.emit()
