@@ -16,7 +16,7 @@ font = ExtResource("2_exqfm")
 font_size = 160
 font_color = Color(0.847059, 0.847059, 0.847059, 1)
 
-[sub_resource type="LabelSettings" id="LabelSettings_xem2k"]
+[sub_resource type="LabelSettings" id="LabelSettings_xisbo"]
 font = ExtResource("2_exqfm")
 font_size = 160
 font_color = Color(0.0235294, 0.0235294, 0.0235294, 1)
@@ -81,7 +81,7 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 5
 text = "vuestra"
-label_settings = SubResource("LabelSettings_xem2k")
+label_settings = SubResource("LabelSettings_xisbo")
 horizontal_alignment = 1
 vertical_alignment = 1
 
