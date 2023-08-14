@@ -15,3 +15,13 @@ func set_values(user, value):
 	$User.text = user
 	#+ " ." + ".".repeat(length) + " " +
 	$Value.text = str(value)
+
+func set_line(property, value):
+	$MarginContainer.custom_minimum_size.x = 10
+	$User.text = property + ": "
+	$User.custom_minimum_size.x = 0
+	$Dots.text = ""
+	$Dots.custom_minimum_size.x = 0
+	$Value.text = value
+	$Value.custom_minimum_size.x = 0
+	$MarginContainer2.custom_minimum_size.x = 0

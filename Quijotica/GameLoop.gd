@@ -13,6 +13,11 @@ var correct_word_timestamp : float = 0.0
 var regex : RegEx = RegEx.new()
 var text_download_url : String = "https://raw.githubusercontent.com/jynus/quijotica/main/texts/"
 var book : String = "don_quixote.txt"
+@onready var h_box_container = $HBoxContainer
+@onready var animation_player = $AnimationPlayer
+@onready var stream_player = $AudioStreamPlayer
+
+@onready var gift = %Gift
 
 var letter_simplifications : Dictionary = {
 	"á": "a",
@@ -94,27 +99,35 @@ func do_text_stuff():
 		%Counter.text = format_integer(Stats.word_count) + " de " + format_integer(Stats.total_words)
 		if Stats.word_count > 0:
 			previous_word = text[Stats.word_count - 1]
-			%PreviousWord.text = previous_word
+			%PreviousWord.text = ""
+			for i in range(Stats.word_count - 1, max(-1, Stats.word_count - 4), -1):
+				%PreviousWord.text = text[i] + " " + %PreviousWord.text
 		word = text[Stats.word_count]
 		simplified_word = simplify_word(word)
 		%Word.text = word
 		if Stats.word_count < Stats.total_words:
 			next_word = text[Stats.word_count + 1]
-			%NextWord.text = next_word
+			%NextWord.text = ""
+			for i in range(Stats.word_count + 1, min(Stats.total_words, Stats.word_count + 4)):
+				%NextWord.text += text[i] + " "
 		else:
 			break  # you win!
 		await correct_word
 		Stats.word_count += 1
+		animation_player.play("correct_word")
+		await animation_player.animation_finished
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	%Overlay.show()
 	get_tree().set_auto_accept_quit(false)
 	do_text_stuff()
+	stream_player.play()
+	stream_player.stream_paused = true
 
 func _notification(what):
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
-		_on_overlay_exit()
+		_exit()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -123,11 +136,12 @@ func _process(delta):
 
 
 func _on_start_menu_connect():
-	%Gift.setup()
+	gift.setup()
 
 
 func _on_gift_joined_chatroom():
 	%start_menu.hide()
+	correct_word_timestamp = Time.get_unix_time_from_system()
 
 func simplify_word(word : String) -> String:
 	var simplified_word : String = ""
@@ -153,7 +167,7 @@ func _on_gift_chat_message(sender_data, message):
 			Stats.users[user] = {"words": 0, "time": 0, "errors": 0}
 		Stats.users[user] = {
 			"words": Stats.users[user]["words"] + 1,
-			"time": Stats.users[user]["time"] + max(0, correct_word_timestamp - current_timestamp),
+			"time": Stats.users[user]["time"] + max(0.0, current_timestamp - correct_word_timestamp),
 			"errors": Stats.users[user]["errors"]
 		}
 		correct_word_timestamp = current_timestamp
@@ -181,16 +195,22 @@ func _on_gift_chat_message(sender_data, message):
 		%User.label_settings.font_color = Color(1, 0.2, 0.2)
 		add_mistake(user)
 
-func _on_overlay_exit():
+func _exit():
 	print("Exiting normally...")
-	%Gift.leave()
-	%Gift.disconnect("chat_message", _on_gift_chat_message)
-	remove_child(%Gift)
-
-
-func _on_gift_tree_exited():
-	#await get_tree().create_timer(1).timeout
+	gift.disconnect("chat_message", _on_gift_chat_message)
+	gift.leave()
+	#await gift.left_chatroom
+	remove_child(gift)
+	#await gift.tree_exited
+	await get_tree().create_timer(0.5).timeout
 	get_tree().quit()
 
 func _on_overlay_show_stats():
 	%Ranking.show()
+
+func start_writing_sound():
+	stream_player.pitch_scale = randf_range(0.5, 1.5)
+	stream_player.stream_paused = false
+
+func stop_writing_sound():
+	stream_player.stream_paused = true

@@ -1,23 +1,19 @@
-[gd_scene load_steps=7 format=3 uid="uid://du6qo5hn23re2"]
+[gd_scene load_steps=9 format=3 uid="uid://du6qo5hn23re2"]
 
 [ext_resource type="Script" path="res://Ranking.gd" id="1_etsof"]
 [ext_resource type="FontFile" uid="uid://c1xq7d3mhuvt5" path="res://assets/Guttenbg.ttf" id="2_ig3vd"]
-[ext_resource type="FontFile" uid="uid://cdfafwjg3xnk2" path="res://assets/Don_Quixote.ttf" id="3_gmadr"]
+[ext_resource type="PackedScene" uid="uid://dyj7w4bn7bmcb" path="res://BackButton.tscn" id="4_p6h4m"]
+[ext_resource type="Texture2D" uid="uid://cvkmlffqobwet" path="res://assets/open_dot.png" id="5_yajqi"]
+[ext_resource type="Texture2D" uid="uid://b5w080xxe134s" path="res://assets/closed_dot.png" id="6_gmnho"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_d87yp"]
 font = ExtResource("2_ig3vd")
 font_size = 100
 font_color = Color(0.0235294, 0.0235294, 0.0235294, 1)
 
-[sub_resource type="LabelSettings" id="LabelSettings_b7gfs"]
-font = ExtResource("2_ig3vd")
-font_size = 60
-font_color = Color(0, 0, 0, 1)
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fqrnr"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_tssdt"]
-font = ExtResource("3_gmadr")
-font_size = 100
-font_color = Color(0, 0, 0, 1)
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_iqrpb"]
 
 [node name="Ranking" type="Node2D"]
 script = ExtResource("1_etsof")
@@ -27,155 +23,233 @@ custom_minimum_size = Vector2(800, 800)
 offset_right = 800.0
 offset_bottom = 800.0
 color = Color(0.980392, 0.980392, 0.980392, 1)
+metadata/_edit_lock_ = true
 
-[node name="StatsTitle" type="Label" parent="Background"]
+[node name="RankingWindows" type="GridContainer" parent="."]
 unique_name_in_owner = true
-layout_mode = 0
-offset_right = 800.0
-offset_bottom = 176.0
-text = "Clasificación"
+anchors_preset = -1
+offset_right = 4016.0
+offset_bottom = 727.0
+columns = 5
+
+[node name="WordsTitle" type="Label" parent="RankingWindows"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(800, 0)
+layout_mode = 2
+text = "Clasificación (palabras)"
 label_settings = SubResource("LabelSettings_d87yp")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="BackButton" type="Button" parent="."]
-offset_left = 40.0
-offset_top = 53.0
-offset_right = 154.0
-offset_bottom = 129.0
-text = "Atrás"
-
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-anchors_preset = 13
-anchor_left = 0.5
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_top = 166.0
-offset_right = 4800.0
-offset_bottom = 744.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="TopWords" type="VBoxContainer" parent="HBoxContainer"]
+[node name="FasterTitle" type="Label" parent="RankingWindows"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(800, 0)
 layout_mode = 2
+text = "Clasificación (velocidad)"
+label_settings = SubResource("LabelSettings_d87yp")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LeastErrorsTitle" type="Label" parent="RankingWindows"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(800, 0)
+layout_mode = 2
+text = "Clasificación (aciertos)"
+label_settings = SubResource("LabelSettings_d87yp")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MostErrorsTitle" type="Label" parent="RankingWindows"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(800, 0)
+layout_mode = 2
+text = "Clasificación (errores)"
+label_settings = SubResource("LabelSettings_d87yp")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GlobalTitle" type="Label" parent="RankingWindows"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(800, 0)
+layout_mode = 2
+text = "Clasificación global"
+label_settings = SubResource("LabelSettings_d87yp")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="RankingWindows"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer2" type="MarginContainer" parent="RankingWindows"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer3" type="MarginContainer" parent="RankingWindows"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer4" type="MarginContainer" parent="RankingWindows"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer5" type="MarginContainer" parent="RankingWindows"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TopWords" type="VBoxContainer" parent="RankingWindows"]
+custom_minimum_size = Vector2(800, 0)
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="RankingWindows/TopWords"]
+custom_minimum_size = Vector2(780, 570)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="TopWords" type="VBoxContainer" parent="RankingWindows/TopWords/ScrollContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(780, 0)
+layout_mode = 2
+size_flags_horizontal = 0
 size_flags_vertical = 0
 
-[node name="Label" type="Label" parent="HBoxContainer/TopWords"]
-layout_mode = 2
-text = "Más palabras correctas"
-label_settings = SubResource("LabelSettings_b7gfs")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Faster" type="VBoxContainer" parent="HBoxContainer"]
+[node name="Faster" type="VBoxContainer" parent="RankingWindows"]
 custom_minimum_size = Vector2(800, 0)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HBoxContainer/Faster"]
+[node name="ScrollContainer" type="ScrollContainer" parent="RankingWindows/Faster"]
+custom_minimum_size = Vector2(780, 570)
 layout_mode = 2
-text = "Más rápidos"
-label_settings = SubResource("LabelSettings_b7gfs")
-horizontal_alignment = 1
-vertical_alignment = 1
+size_flags_horizontal = 0
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer/Faster"]
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/Faster/HBoxContainer2"]
-custom_minimum_size = Vector2(50, 0)
+[node name="Faster" type="VBoxContainer" parent="RankingWindows/Faster/ScrollContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(780, 0)
 layout_mode = 2
 
-[node name="Top1" type="Label" parent="HBoxContainer/Faster/HBoxContainer2"]
-layout_mode = 2
-text = "Jynus ..................... 100"
-label_settings = SubResource("LabelSettings_tssdt")
-
-[node name="MarginContainer2" type="MarginContainer" parent="HBoxContainer/Faster/HBoxContainer2"]
-custom_minimum_size = Vector2(50, 0)
-layout_mode = 2
-
-[node name="LeastErrors" type="VBoxContainer" parent="HBoxContainer"]
+[node name="LeastErrors" type="VBoxContainer" parent="RankingWindows"]
 custom_minimum_size = Vector2(800, 0)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HBoxContainer/LeastErrors"]
+[node name="ScrollContainer" type="ScrollContainer" parent="RankingWindows/LeastErrors"]
+custom_minimum_size = Vector2(780, 570)
 layout_mode = 2
-text = "Menos errores"
-label_settings = SubResource("LabelSettings_b7gfs")
-horizontal_alignment = 1
-vertical_alignment = 1
+size_flags_horizontal = 0
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer/LeastErrors"]
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/LeastErrors/HBoxContainer2"]
-custom_minimum_size = Vector2(50, 0)
+[node name="LeastErrors" type="VBoxContainer" parent="RankingWindows/LeastErrors/ScrollContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(780, 0)
 layout_mode = 2
 
-[node name="Top1" type="Label" parent="HBoxContainer/LeastErrors/HBoxContainer2"]
-layout_mode = 2
-text = "Jynus .......................... 100"
-label_settings = SubResource("LabelSettings_tssdt")
-
-[node name="MarginContainer2" type="MarginContainer" parent="HBoxContainer/LeastErrors/HBoxContainer2"]
-custom_minimum_size = Vector2(50, 0)
-layout_mode = 2
-
-[node name="MostErrors" type="VBoxContainer" parent="HBoxContainer"]
+[node name="MostErrors" type="VBoxContainer" parent="RankingWindows"]
 custom_minimum_size = Vector2(800, 0)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HBoxContainer/MostErrors"]
+[node name="ScrollContainer" type="ScrollContainer" parent="RankingWindows/MostErrors"]
+custom_minimum_size = Vector2(780, 570)
 layout_mode = 2
-text = "Más errores"
-label_settings = SubResource("LabelSettings_b7gfs")
-horizontal_alignment = 1
-vertical_alignment = 1
+size_flags_horizontal = 0
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer/MostErrors"]
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/MostErrors/HBoxContainer2"]
-custom_minimum_size = Vector2(50, 0)
+[node name="MostErrors" type="VBoxContainer" parent="RankingWindows/MostErrors/ScrollContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(780, 0)
 layout_mode = 2
 
-[node name="Top1" type="Label" parent="HBoxContainer/MostErrors/HBoxContainer2"]
-layout_mode = 2
-text = "Jynus .......................... 100"
-label_settings = SubResource("LabelSettings_tssdt")
-
-[node name="MarginContainer2" type="MarginContainer" parent="HBoxContainer/MostErrors/HBoxContainer2"]
-custom_minimum_size = Vector2(50, 0)
-layout_mode = 2
-
-[node name="GlobalRanking" type="VBoxContainer" parent="HBoxContainer"]
+[node name="GlobalRanking" type="VBoxContainer" parent="RankingWindows"]
 custom_minimum_size = Vector2(800, 0)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HBoxContainer/GlobalRanking"]
+[node name="ScrollContainer" type="ScrollContainer" parent="RankingWindows/GlobalRanking"]
+custom_minimum_size = Vector2(780, 570)
 layout_mode = 2
-text = "Streamers"
-label_settings = SubResource("LabelSettings_b7gfs")
-horizontal_alignment = 1
-vertical_alignment = 1
+size_flags_horizontal = 0
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer/GlobalRanking"]
+[node name="GlobalRankingContainer" type="VBoxContainer" parent="RankingWindows/GlobalRanking/ScrollContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(780, 0)
 layout_mode = 2
+alignment = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/GlobalRanking/HBoxContainer2"]
+[node name="NavigationButtons" type="HBoxContainer" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_top = 725.0
+offset_right = 800.0
+offset_bottom = 800.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="NavigationButtons"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Page1Button" type="Button" parent="NavigationButtons"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_fqrnr")
+icon = ExtResource("5_yajqi")
+icon_alignment = 1
+
+[node name="Page2Button" type="Button" parent="NavigationButtons"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/normal = SubResource("StyleBoxEmpty_iqrpb")
+icon = ExtResource("6_gmnho")
+icon_alignment = 1
 
-[node name="Top1" type="Label" parent="HBoxContainer/GlobalRanking/HBoxContainer2"]
-layout_mode = 2
-text = "Jynus .......................... 100"
-label_settings = SubResource("LabelSettings_tssdt")
-
-[node name="MarginContainer2" type="MarginContainer" parent="HBoxContainer/GlobalRanking/HBoxContainer2"]
+[node name="Page3Button" type="Button" parent="NavigationButtons"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/normal = SubResource("StyleBoxEmpty_iqrpb")
+icon = ExtResource("6_gmnho")
+icon_alignment = 1
+
+[node name="Page4Button" type="Button" parent="NavigationButtons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/normal = SubResource("StyleBoxEmpty_iqrpb")
+icon = ExtResource("6_gmnho")
+icon_alignment = 1
+
+[node name="Page5Button" type="Button" parent="NavigationButtons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/normal = SubResource("StyleBoxEmpty_iqrpb")
+icon = ExtResource("6_gmnho")
+icon_alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="NavigationButtons"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BackButton" parent="." instance=ExtResource("4_p6h4m")]
+offset_left = 36.0
+offset_top = 61.0
+offset_right = 150.0
+offset_bottom = 137.0
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
-[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="NavigationButtons/Page1Button" to="." method="_on_page_1_button_pressed"]
+[connection signal="pressed" from="NavigationButtons/Page2Button" to="." method="_on_page_2_button_pressed"]
+[connection signal="pressed" from="NavigationButtons/Page3Button" to="." method="_on_page_3_button_pressed"]
+[connection signal="pressed" from="NavigationButtons/Page4Button" to="." method="_on_page_4_button_pressed"]
+[connection signal="pressed" from="NavigationButtons/Page5Button" to="." method="_on_page_5_button_pressed"]

@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://dyj7w4bn7bmcb"]
+
+[ext_resource type="Script" path="res://BackButton.gd" id="1_mkifc"]
+
+[node name="BackButton" type="Button"]
+offset_left = -58.0
+offset_top = -39.0
+offset_right = 56.0
+offset_bottom = 37.0
+size_flags_horizontal = 4
+text = "Atrás"
+script = ExtResource("1_mkifc")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

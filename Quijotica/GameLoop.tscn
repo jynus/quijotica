@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://sb21nf2wf7if"]
+[gd_scene load_steps=21 format=3 uid="uid://sb21nf2wf7if"]
 
 [ext_resource type="Script" path="res://GameLoop.gd" id="1_g4qhq"]
 [ext_resource type="FontFile" uid="uid://cdfafwjg3xnk2" path="res://assets/Don_Quixote.ttf" id="2_exqfm"]
@@ -7,28 +7,226 @@
 [ext_resource type="Script" path="res://Gift.gd" id="4_semax"]
 [ext_resource type="PackedScene" uid="uid://du6qo5hn23re2" path="res://Ranking.tscn" id="5_3lwqm"]
 [ext_resource type="PackedScene" uid="uid://b0moxwhs6be06" path="res://StartMenu.tscn" id="5_igfx2"]
+[ext_resource type="AudioStream" uid="uid://bj8kaabmej0xu" path="res://assets/pencil-29272.mp3" id="8_uo8pk"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_cufs0"]
+font = ExtResource("3_chick")
+font_size = 100
+font_color = Color(0.0235294, 0.0235294, 0.0235294, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_f3vrk"]
 font = ExtResource("3_chick")
 font_size = 100
 font_color = Color(0.0235294, 0.0235294, 0.0235294, 1)
 
-[sub_resource type="LabelSettings" id="LabelSettings_4xpe7"]
+[sub_resource type="LabelSettings" id="LabelSettings_ag4df"]
 font = ExtResource("2_exqfm")
 font_size = 160
-font_color = Color(0.847059, 0.847059, 0.847059, 1)
+font_color = Color(0.627451, 0.627451, 0.627451, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_xisbo"]
 font = ExtResource("2_exqfm")
+font_size = 280
+font_color = Color(0, 0, 0, 1)
+outline_size = 20
+shadow_size = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_4xpe7"]
+font = ExtResource("2_exqfm")
 font_size = 160
-font_color = Color(0.0235294, 0.0235294, 0.0235294, 1)
+font_color = Color(0.627451, 0.627451, 0.627451, 1)
+shadow_size = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_dydrh"]
+font = ExtResource("2_exqfm")
+font_size = 300
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Gradient" id="Gradient_4wp8a"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.298153, 1)
+colors = PackedColorArray(0.968627, 0.952941, 0.968627, 1, 0.968627, 0.952941, 0.968627, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_4658s"]
+gradient = SubResource("Gradient_4wp8a")
+
+[sub_resource type="Animation" id="Animation_ras3e"]
+resource_name = "next_word"
+length = 0.3
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("marker:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("HBoxContainer:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-695, 130), Vector2(-766, 130)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HBoxContainer/Word:label_settings:font_size")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [280, 160]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("HBoxContainer/Word:label_settings:font_color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0.627451, 0.627451, 0.627451, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_2vj1h"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("marker:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("HBoxContainer:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-820, 231)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HBoxContainer/Word:label_settings:font_size")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [280]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("HBoxContainer/Word:label_settings:font_color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("marker:size")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(800, 542)]
+}
+
+[sub_resource type="Animation" id="Animation_jbt4q"]
+resource_name = "correct_word"
+length = 0.25
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("marker:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.14, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 542), Vector2(150, 542), Vector2(150, 542)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("marker:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"start_writing_sound"
+}, {
+"args": [],
+"method": &"stop_writing_sound"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ayt2g"]
+_data = {
+"RESET": SubResource("Animation_2vj1h"),
+"correct_word": SubResource("Animation_jbt4q"),
+"next_word": SubResource("Animation_ras3e")
+}
 
 [node name="Game_loop" type="Node2D"]
 script = ExtResource("1_g4qhq")
 
 [node name="Background" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(800, 800)
-color = Color(0.980392, 0.980392, 0.980392, 1)
+offset_right = 800.0
+offset_bottom = 800.0
+color = Color(0.968627, 0.952941, 0.968627, 1)
 
 [node name="Counter" type="Label" parent="Background"]
 unique_name_in_owner = true
@@ -36,7 +234,7 @@ layout_mode = 0
 offset_right = 800.0
 offset_bottom = 176.0
 text = "372 802 de 372 802"
-label_settings = SubResource("LabelSettings_f3vrk")
+label_settings = SubResource("LabelSettings_cufs0")
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -51,55 +249,88 @@ label_settings = SubResource("LabelSettings_f3vrk")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Background"]
-layout_mode = 1
-anchors_preset = 13
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchors_preset = 8
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -400.0
-offset_right = 400.0
+anchor_bottom = 0.5
+offset_left = -820.0
+offset_top = 231.0
+offset_right = -10.0
+offset_bottom = 680.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PreviousWord" type="Label" parent="Background/HBoxContainer"]
+[node name="PreviousWord" type="Label" parent="HBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(800, 0)
+custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
-size_flags_horizontal = 8
+size_flags_horizontal = 3
 size_flags_vertical = 5
-text = "pero"
-label_settings = SubResource("LabelSettings_4xpe7")
+text = "de la Mancha"
+label_settings = SubResource("LabelSettings_ag4df")
 horizontal_alignment = 2
 vertical_alignment = 1
+clip_text = true
 
-[node name="MarginContainer" type="MarginContainer" parent="Background/HBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer"]
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 
-[node name="Word" type="Label" parent="Background/HBoxContainer"]
+[node name="Word" type="Label" parent="HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 6
+size_flags_horizontal = 4
 size_flags_vertical = 5
-text = "Q"
+text = "En"
 label_settings = SubResource("LabelSettings_xisbo")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MarginContainer2" type="MarginContainer" parent="Background/HBoxContainer"]
+[node name="MarginContainer2" type="MarginContainer" parent="HBoxContainer"]
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 
-[node name="NextWord" type="Label" parent="Background/HBoxContainer"]
+[node name="NextWord" type="Label" parent="HBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(800, 0)
+custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
-size_flags_horizontal = 0
+size_flags_horizontal = 2
 size_flags_vertical = 5
-text = "Merced"
+text = "un lugar"
 label_settings = SubResource("LabelSettings_4xpe7")
 vertical_alignment = 1
+clip_text = true
+
+[node name="marker" type="Label" parent="."]
+unique_name_in_owner = true
+visible = false
+clip_contents = true
+offset_left = 324.0
+offset_top = 334.0
+offset_right = 1124.0
+offset_bottom = 876.0
+size_flags_horizontal = 8
+size_flags_vertical = 5
+text = "-"
+label_settings = SubResource("LabelSettings_dydrh")
+vertical_alignment = 1
+clip_text = true
+
+[node name="ColorRect" type="TextureRect" parent="."]
+offset_left = 720.0
+offset_top = 150.0
+offset_right = 800.0
+offset_bottom = 599.0
+texture = SubResource("GradientTexture2D_4658s")
+flip_h = true
+
+[node name="ColorRect2" type="TextureRect" parent="."]
+offset_top = 150.0
+offset_right = 80.0
+offset_bottom = 635.0
+texture = SubResource("GradientTexture2D_4658s")
 
 [node name="Overlay" parent="." instance=ExtResource("4_nvca3")]
 unique_name_in_owner = true
@@ -109,20 +340,26 @@ visible = false
 unique_name_in_owner = true
 visible = false
 
+[node name="start_menu" parent="." instance=ExtResource("5_igfx2")]
+unique_name_in_owner = true
+visible = false
+
 [node name="Gift" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("4_semax")
 disk_cache = true
 
-[node name="start_menu" parent="." instance=ExtResource("5_igfx2")]
-unique_name_in_owner = true
-visible = false
-
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 
-[connection signal="exit" from="Overlay" to="." method="_on_overlay_exit"]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_uo8pk")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ayt2g")
+}
+
 [connection signal="show_stats" from="Overlay" to="." method="_on_overlay_show_stats"]
+[connection signal="connect" from="start_menu" to="." method="_on_start_menu_connect"]
 [connection signal="chat_message" from="Gift" to="." method="_on_gift_chat_message"]
 [connection signal="joined_chatroom" from="Gift" to="." method="_on_gift_joined_chatroom"]
-[connection signal="tree_exited" from="Gift" to="." method="_on_gift_tree_exited"]
-[connection signal="connect" from="start_menu" to="." method="_on_start_menu_connect"]
