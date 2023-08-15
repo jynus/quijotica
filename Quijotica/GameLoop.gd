@@ -77,7 +77,10 @@ func do_text_stuff():
 		await download(text_download_url + book, "user://" + book)
 
 	var text_file = FileAccess.open("user://" + book , FileAccess.READ)
-	regex.compile("\\p{L}+")
+	if book in ["numerica.txt", "pi.txt"]:
+		regex.compile("[0-9]+")
+	else:
+		regex.compile("\\p{L}+")
 
 	while not text_file.eof_reached():
 		line = text_file.get_line()

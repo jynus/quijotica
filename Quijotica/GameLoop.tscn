@@ -293,7 +293,6 @@ _data = {
 
 [node name="Game_loop" type="Node2D"]
 script = ExtResource("1_g4qhq")
-book = "pi.txt"
 
 [node name="Background" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(800, 800)
