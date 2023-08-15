@@ -22,12 +22,11 @@ script = ExtResource("1_etsof")
 custom_minimum_size = Vector2(800, 800)
 offset_right = 800.0
 offset_bottom = 800.0
-color = Color(0.980392, 0.980392, 0.980392, 1)
+color = Color(0.968627, 0.952941, 0.968627, 1)
 metadata/_edit_lock_ = true
 
 [node name="RankingWindows" type="GridContainer" parent="."]
 unique_name_in_owner = true
-anchors_preset = -1
 offset_right = 4016.0
 offset_bottom = 727.0
 columns = 5

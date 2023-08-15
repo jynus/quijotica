@@ -26,13 +26,13 @@ func setup() -> void:
 	var success = await(connect_to_irc())
 	if (success):
 		request_caps()
-		await join_channel(username)
+		join_channel(username)
 		joined_chatroom.emit()
-	#await(connect_to_eventsub())
+		await(connect_to_eventsub())
 	# Refer to https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/ for details on
 	# what events exist, which API versions are available and which conditions are required.
 	# Make sure your token has all required scopes for the event.
-	#subscribe_event("channel.follow", 2, {"broadcaster_user_id": user_id, "moderator_user_id": user_id})
+	subscribe_event("channel.follow", 2, {"broadcaster_user_id": user_id, "moderator_user_id": user_id})
 
 	# Adds a command with a specified permission flag.
 	# All implementations must take at least one arg for the command info.

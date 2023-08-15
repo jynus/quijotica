@@ -27,3 +27,6 @@ func _on_mouse_exited():
 
 func _on_stats_button_pressed():
 	show_stats.emit()
+
+func _on_settings_button_pressed():
+	show_settings.emit()

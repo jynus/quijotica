@@ -8,6 +8,7 @@ var word : String
 var simplified_word : String
 var previous_word : String
 var next_word : String
+var large_window : bool = true
 
 var correct_word_timestamp : float = 0.0
 var regex : RegEx = RegEx.new()
@@ -19,6 +20,7 @@ var book : String = "don_quixote.txt"
 
 @onready var gift = %Gift
 
+const SMALL_WINDOW_SIZE : int = 400
 var letter_simplifications : Dictionary = {
 	"á": "a",
 	"à": "a",
@@ -112,10 +114,19 @@ func do_text_stuff():
 				%NextWord.text += text[i] + " "
 		else:
 			break  # you win!
+
+		if len(word) > 3:
+			%Strike.size.x = 571
+			%Strike.position.x = 151
+		else:
+			%Strike.size.x = 287
+			%Strike.position.x = 279
+
 		await correct_word
 		Stats.word_count += 1
-		animation_player.play("correct_word")
-		await animation_player.animation_finished
+		if large_window:
+			animation_player.play("correct_word_2")
+			await animation_player.animation_finished
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -124,6 +135,33 @@ func _ready():
 	do_text_stuff()
 	stream_player.play()
 	stream_player.stream_paused = true
+	get_tree().root.connect("size_changed", _on_viewport_size_changed)
+
+func _on_viewport_size_changed():
+	# Do whatever you need to do when the window changes!
+	print ("Viewport size changed: ", get_viewport().size)
+	if large_window and get_viewport().size.x < SMALL_WINDOW_SIZE or get_viewport().size.x < SMALL_WINDOW_SIZE:
+		large_window = false
+		%Overlay.hide()
+		%PreviousWord.hide()
+		%NextWord.hide()
+		$HBoxContainer/MarginContainer.hide()
+		$HBoxContainer/MarginContainer2.hide()
+		%Word.custom_minimum_size.x = 800
+		%Word.label_settings.font_size = 320
+		%Counter.hide()
+		%User.hide()
+	elif not large_window and get_viewport().size.x >= SMALL_WINDOW_SIZE and get_viewport().size.x >= SMALL_WINDOW_SIZE:
+		large_window = true
+		%Overlay.show()
+		%PreviousWord.show()
+		%NextWord.show()
+		$HBoxContainer/MarginContainer.show()
+		$HBoxContainer/MarginContainer2.show()
+		%Word.custom_minimum_size.x = 0
+		%Word.label_settings.font_size = 280
+		%Counter.show()
+		%User.show()
 
 func _notification(what):
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
@@ -214,3 +252,7 @@ func start_writing_sound():
 
 func stop_writing_sound():
 	stream_player.stream_paused = true
+
+
+func _on_overlay_show_settings():
+	%Settings.show()

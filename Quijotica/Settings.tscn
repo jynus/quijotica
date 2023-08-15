@@ -1,0 +1,114 @@
+[gd_scene load_steps=6 format=3 uid="uid://bcd613socawx4"]
+
+[ext_resource type="FontFile" uid="uid://c1xq7d3mhuvt5" path="res://assets/Guttenbg.ttf" id="1_ng4l6"]
+[ext_resource type="PackedScene" uid="uid://dyj7w4bn7bmcb" path="res://BackButton.tscn" id="2_3jt6k"]
+[ext_resource type="FontFile" uid="uid://cdfafwjg3xnk2" path="res://assets/Don_Quixote.ttf" id="3_17d17"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_bjmr7"]
+font = ExtResource("1_ng4l6")
+font_size = 100
+font_color = Color(0.0235294, 0.0235294, 0.0235294, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_igclp"]
+font = ExtResource("3_17d17")
+font_size = 100
+font_color = Color(0, 0, 0, 1)
+
+[node name="Settings" type="Node2D"]
+
+[node name="Background" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(800, 800)
+offset_right = 800.0
+offset_bottom = 800.0
+color = Color(0.968627, 0.952941, 0.968627, 1)
+metadata/_edit_lock_ = true
+
+[node name="SettingsTitle" type="Label" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(800, 0)
+text = "Menesteres"
+label_settings = SubResource("LabelSettings_bjmr7")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BackButton" parent="." instance=ExtResource("2_3jt6k")]
+offset_left = 21.0
+offset_top = 29.0
+offset_right = 135.0
+offset_bottom = 105.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+offset_left = 5.0
+offset_top = 176.0
+offset_right = 795.0
+offset_bottom = 776.0
+
+[node name="SettingsContainer" type="VBoxContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+
+[node name="FontAcessibility" type="Label" parent="ScrollContainer/SettingsContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Tipado accesible"
+label_settings = SubResource("LabelSettings_igclp")
+horizontal_alignment = 1
+
+[node name="Theme" type="Label" parent="ScrollContainer/SettingsContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Tema"
+label_settings = SubResource("LabelSettings_igclp")
+horizontal_alignment = 1
+
+[node name="Volume" type="Label" parent="ScrollContainer/SettingsContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Volumen"
+label_settings = SubResource("LabelSettings_igclp")
+horizontal_alignment = 1
+
+[node name="Book" type="Label" parent="ScrollContainer/SettingsContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Cambiar libro"
+label_settings = SubResource("LabelSettings_igclp")
+horizontal_alignment = 1
+
+[node name="BansAndLength" type="Label" parent="ScrollContainer/SettingsContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Activar bans (y timeout)"
+label_settings = SubResource("LabelSettings_igclp")
+horizontal_alignment = 1
+
+[node name="Vips" type="Label" parent="ScrollContainer/SettingsContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Activar VIPs"
+label_settings = SubResource("LabelSettings_igclp")
+horizontal_alignment = 1
+
+[node name="ModIgnore" type="Label" parent="ScrollContainer/SettingsContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Ignorar mods
+"
+label_settings = SubResource("LabelSettings_igclp")
+horizontal_alignment = 1
+
+[node name="Exclusivity" type="Label" parent="ScrollContainer/SettingsContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Activar Exclusividad
+"
+label_settings = SubResource("LabelSettings_igclp")
+horizontal_alignment = 1
+
+[node name="Reset" type="Label" parent="ScrollContainer/SettingsContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Resetear todo"
+label_settings = SubResource("LabelSettings_igclp")
+horizontal_alignment = 1

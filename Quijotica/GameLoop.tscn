@@ -1,12 +1,14 @@
-[gd_scene load_steps=21 format=3 uid="uid://sb21nf2wf7if"]
+[gd_scene load_steps=24 format=3 uid="uid://sb21nf2wf7if"]
 
 [ext_resource type="Script" path="res://GameLoop.gd" id="1_g4qhq"]
 [ext_resource type="FontFile" uid="uid://cdfafwjg3xnk2" path="res://assets/Don_Quixote.ttf" id="2_exqfm"]
 [ext_resource type="FontFile" uid="uid://c1xq7d3mhuvt5" path="res://assets/Guttenbg.ttf" id="3_chick"]
+[ext_resource type="Texture2D" uid="uid://12o2evrs85s5" path="res://assets/ninepatchrec.png" id="3_rt3cr"]
 [ext_resource type="PackedScene" uid="uid://y51wof4qdj5u" path="res://Overlay.tscn" id="4_nvca3"]
 [ext_resource type="Script" path="res://Gift.gd" id="4_semax"]
 [ext_resource type="PackedScene" uid="uid://du6qo5hn23re2" path="res://Ranking.tscn" id="5_3lwqm"]
 [ext_resource type="PackedScene" uid="uid://b0moxwhs6be06" path="res://StartMenu.tscn" id="5_igfx2"]
+[ext_resource type="PackedScene" uid="uid://bcd613socawx4" path="res://Settings.tscn" id="7_kb56c"]
 [ext_resource type="AudioStream" uid="uid://bj8kaabmej0xu" path="res://assets/pencil-29272.mp3" id="8_uo8pk"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_cufs0"]
@@ -28,7 +30,6 @@ font_color = Color(0.627451, 0.627451, 0.627451, 1)
 font = ExtResource("2_exqfm")
 font_size = 280
 font_color = Color(0, 0, 0, 1)
-outline_size = 20
 shadow_size = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_4xpe7"]
@@ -127,7 +128,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-820, 231)]
+"values": [Vector2(-5, 216)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -164,6 +165,18 @@ tracks/4/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(800, 542)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Background/StrikeHidden:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_jbt4q"]
@@ -212,10 +225,69 @@ tracks/2/keys = {
 }]
 }
 
+[sub_resource type="Animation" id="Animation_2viq3"]
+resource_name = "correct_word_2"
+length = 0.25
+step = 0.01
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"start_writing_sound"
+}, {
+"args": [],
+"method": &"stop_writing_sound"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Background/StrikeHidden:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-4, 1), Vector2(792, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Background/Strike:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Background/StrikeHidden:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ayt2g"]
 _data = {
 "RESET": SubResource("Animation_2vj1h"),
 "correct_word": SubResource("Animation_jbt4q"),
+"correct_word_2": SubResource("Animation_2viq3"),
 "next_word": SubResource("Animation_ras3e")
 }
 
@@ -226,6 +298,38 @@ script = ExtResource("1_g4qhq")
 custom_minimum_size = Vector2(800, 800)
 offset_right = 800.0
 offset_bottom = 800.0
+color = Color(0.968627, 0.952941, 0.968627, 1)
+metadata/_edit_lock_ = true
+
+[node name="Strike" type="NinePatchRect" parent="Background"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 279.0
+offset_top = 376.0
+offset_right = -234.0
+offset_bottom = -347.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_rt3cr")
+region_rect = Rect2(19, 25, 288, 76)
+patch_margin_left = 167
+patch_margin_right = 120
+axis_stretch_horizontal = 1
+
+[node name="StrikeHidden" type="ColorRect" parent="Background"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -804.0
+offset_top = 1.0
+offset_right = -5.00024
+offset_bottom = 801.0
+grow_horizontal = 0
 color = Color(0.968627, 0.952941, 0.968627, 1)
 
 [node name="Counter" type="Label" parent="Background"]
@@ -250,23 +354,24 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
-anchors_preset = 8
+anchors_preset = 13
 anchor_left = 0.5
-anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -820.0
-offset_top = 231.0
-offset_right = -10.0
-offset_bottom = 680.0
+anchor_bottom = 1.0
+offset_left = -5.0
+offset_top = 216.0
+offset_right = 825.0
+offset_bottom = 665.0
 grow_horizontal = 2
 grow_vertical = 2
+pivot_offset = Vector2(400, 150)
 
 [node name="PreviousWord" type="Label" parent="HBoxContainer"]
 unique_name_in_owner = true
+clip_contents = true
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 10
 size_flags_vertical = 5
 text = "de la Mancha"
 label_settings = SubResource("LabelSettings_ag4df")
@@ -275,7 +380,7 @@ vertical_alignment = 1
 clip_text = true
 
 [node name="MarginContainer" type="MarginContainer" parent="HBoxContainer"]
-custom_minimum_size = Vector2(20, 0)
+custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 
 [node name="Word" type="Label" parent="HBoxContainer"]
@@ -289,11 +394,12 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="MarginContainer2" type="MarginContainer" parent="HBoxContainer"]
-custom_minimum_size = Vector2(20, 0)
+custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 
 [node name="NextWord" type="Label" parent="HBoxContainer"]
 unique_name_in_owner = true
+clip_contents = true
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_horizontal = 2
@@ -340,6 +446,10 @@ visible = false
 unique_name_in_owner = true
 visible = false
 
+[node name="Settings" parent="." instance=ExtResource("7_kb56c")]
+unique_name_in_owner = true
+visible = false
+
 [node name="start_menu" parent="." instance=ExtResource("5_igfx2")]
 unique_name_in_owner = true
 visible = false
@@ -347,6 +457,7 @@ visible = false
 [node name="Gift" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("4_semax")
+scopes = Array[String](["chat:edit", "chat:read", "moderator:read:followers"])
 disk_cache = true
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
@@ -359,6 +470,7 @@ libraries = {
 "": SubResource("AnimationLibrary_ayt2g")
 }
 
+[connection signal="show_settings" from="Overlay" to="." method="_on_overlay_show_settings"]
 [connection signal="show_stats" from="Overlay" to="." method="_on_overlay_show_stats"]
 [connection signal="connect" from="start_menu" to="." method="_on_start_menu_connect"]
 [connection signal="chat_message" from="Gift" to="." method="_on_gift_chat_message"]
