@@ -130,6 +130,7 @@ func do_text_stuff():
 		if large_window:
 			animation_player.play("correct_word_2")
 			await animation_player.animation_finished
+	%Credits.win()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -249,13 +250,18 @@ func _exit():
 func _on_overlay_show_stats():
 	%Ranking.show()
 
+func _on_overlay_show_settings():
+	%Settings.show()
+
+func _on_overlay_show_credits():
+	%Credits.show()
+
+func _on_overlay_show_rules():
+	%Rules.show()
+
 func start_writing_sound():
 	stream_player.pitch_scale = randf_range(0.5, 1.5)
 	stream_player.stream_paused = false
 
 func stop_writing_sound():
 	stream_player.stream_paused = true
-
-
-func _on_overlay_show_settings():
-	%Settings.show()

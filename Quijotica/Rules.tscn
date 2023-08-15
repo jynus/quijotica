@@ -1,0 +1,84 @@
+[gd_scene load_steps=6 format=3 uid="uid://ufuxfa7b1hb7"]
+
+[ext_resource type="FontFile" uid="uid://c1xq7d3mhuvt5" path="res://assets/Guttenbg.ttf" id="2_c2p8d"]
+[ext_resource type="FontFile" uid="uid://cdfafwjg3xnk2" path="res://assets/Don_Quixote.ttf" id="3_3x2p5"]
+[ext_resource type="PackedScene" uid="uid://dyj7w4bn7bmcb" path="res://BackButton.tscn" id="4_1mhal"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_d87yp"]
+font = ExtResource("2_c2p8d")
+font_size = 75
+font_color = Color(0.0235294, 0.0235294, 0.0235294, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_r1ee5"]
+font = ExtResource("3_3x2p5")
+font_size = 65
+font_color = Color(0, 0, 0, 1)
+
+[node name="Rules" type="Node2D"]
+
+[node name="Background" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(800, 800)
+offset_right = 800.0
+offset_bottom = 800.0
+color = Color(0.968627, 0.952941, 0.968627, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Background"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RulesTitle" type="Label" parent="Background/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Leyes de la caballería"
+label_settings = SubResource("LabelSettings_d87yp")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Background/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="ScrollCredits" type="ScrollContainer" parent="Background/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(800, 600)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Background/VBoxContainer/ScrollCredits"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="Background/VBoxContainer/ScrollCredits/HBoxContainer"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Background/VBoxContainer/ScrollCredits/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1. Hable claro y sin errores las palabras desta novela, y sea lo que fuere, que con eso nos contentamos
+
+2. Esté advertido de aquí adelante en una cosa, para que os abstengais y reportéis la desdicha de una palabra que no corresponda, fuere de lugar o con falta de respeto hacia la ortografía castellana, u otro motivo
+
+3. Como buen caballero, no esperéis premio alguno, más allá de la gloria por ser el caballero más certero, con menos ferrores o más rápido en el manejo de la palabra; o bien por la gloria que le corresponde al señor o señora destas tierras.
+
+4. Aquellos que cometan más ferrores serán objeto de escarnio público
+
+5. Estén alerta, pues existen dos diablillos infliltrados que se hacen pasar por caballeros de alta alcurnia y engañarnos con sus malas artes. Sus nombres son Ezoniev y Montxaldre. No se dejen engañar por estos embustes. Para discernir caballeros de diablillos, estos últimos jamás dirían \"@jynus perdón por los timeouts no justificados\". Hasta entonces ellos no estarán permitidos en estas nuestras menesteres de caballería.
+
+6. El primer señor (o señora) en completar su misión de caballería recibirá un tesoro de gran valor"
+label_settings = SubResource("LabelSettings_r1ee5")
+autowrap_mode = 3
+
+[node name="MarginContainer2" type="MarginContainer" parent="Background/VBoxContainer/ScrollCredits/HBoxContainer"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+
+[node name="BackButton" parent="." instance=ExtResource("4_1mhal")]
+offset_left = 21.0
+offset_top = 37.0
+offset_right = 135.0
+offset_bottom = 113.0

@@ -13,6 +13,12 @@ func compare_by_value(a: Dictionary, b: Dictionary) -> bool:
 func compare_by_value_inverse(a: Dictionary, b: Dictionary) -> bool:
 	return b["value"] < a["value"] or (a["value"] == b["value"] and a["user"] < b["user"])
 
+func get_all_users_in_order_of_appearance() -> Array:
+	var top_users : Array = []
+	for user in users:
+		top_users.append({"user": user, "value": users[user]["words"]})
+	return top_users
+
 func get_top_users_by_words() -> Array:
 	var top_users : Array = []
 	for user in users:

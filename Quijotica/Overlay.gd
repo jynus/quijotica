@@ -30,3 +30,9 @@ func _on_stats_button_pressed():
 
 func _on_settings_button_pressed():
 	show_settings.emit()
+
+func _on_credits_button_pressed():
+	show_credits.emit()
+
+func _on_rules_button_pressed():
+	show_rules.emit()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://sb21nf2wf7if"]
+[gd_scene load_steps=26 format=3 uid="uid://sb21nf2wf7if"]
 
 [ext_resource type="Script" path="res://GameLoop.gd" id="1_g4qhq"]
 [ext_resource type="FontFile" uid="uid://cdfafwjg3xnk2" path="res://assets/Don_Quixote.ttf" id="2_exqfm"]
@@ -8,8 +8,10 @@
 [ext_resource type="Script" path="res://Gift.gd" id="4_semax"]
 [ext_resource type="PackedScene" uid="uid://du6qo5hn23re2" path="res://Ranking.tscn" id="5_3lwqm"]
 [ext_resource type="PackedScene" uid="uid://b0moxwhs6be06" path="res://StartMenu.tscn" id="5_igfx2"]
+[ext_resource type="PackedScene" uid="uid://ufuxfa7b1hb7" path="res://Rules.tscn" id="6_4m6xt"]
 [ext_resource type="PackedScene" uid="uid://bcd613socawx4" path="res://Settings.tscn" id="7_kb56c"]
 [ext_resource type="AudioStream" uid="uid://bj8kaabmej0xu" path="res://assets/pencil-29272.mp3" id="8_uo8pk"]
+[ext_resource type="PackedScene" uid="uid://c5pvbt84a656d" path="res://Credits.tscn" id="8_wgrd6"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_cufs0"]
 font = ExtResource("3_chick")
@@ -423,6 +425,7 @@ text = "-"
 label_settings = SubResource("LabelSettings_dydrh")
 vertical_alignment = 1
 clip_text = true
+metadata/_edit_lock_ = true
 
 [node name="ColorRect" type="TextureRect" parent="."]
 offset_left = 720.0
@@ -442,11 +445,19 @@ texture = SubResource("GradientTexture2D_4658s")
 unique_name_in_owner = true
 visible = false
 
+[node name="Rules" parent="." instance=ExtResource("6_4m6xt")]
+unique_name_in_owner = true
+visible = false
+
 [node name="Ranking" parent="." instance=ExtResource("5_3lwqm")]
 unique_name_in_owner = true
 visible = false
 
 [node name="Settings" parent="." instance=ExtResource("7_kb56c")]
+unique_name_in_owner = true
+visible = false
+
+[node name="Credits" parent="." instance=ExtResource("8_wgrd6")]
 unique_name_in_owner = true
 visible = false
 
@@ -470,6 +481,8 @@ libraries = {
 "": SubResource("AnimationLibrary_ayt2g")
 }
 
+[connection signal="show_credits" from="Overlay" to="." method="_on_overlay_show_credits"]
+[connection signal="show_rules" from="Overlay" to="." method="_on_overlay_show_rules"]
 [connection signal="show_settings" from="Overlay" to="." method="_on_overlay_show_settings"]
 [connection signal="show_stats" from="Overlay" to="." method="_on_overlay_show_stats"]
 [connection signal="connect" from="start_menu" to="." method="_on_start_menu_connect"]
