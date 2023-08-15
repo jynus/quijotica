@@ -13,7 +13,7 @@ var large_window : bool = true
 var correct_word_timestamp : float = 0.0
 var regex : RegEx = RegEx.new()
 var text_download_url : String = "https://raw.githubusercontent.com/jynus/quijotica/main/texts/"
-var book : String = "don_quixote.txt"
+@export var book : String = "don_quixote.txt"
 @onready var h_box_container = $HBoxContainer
 @onready var animation_player = $AnimationPlayer
 @onready var stream_player = $AudioStreamPlayer
@@ -76,7 +76,7 @@ func do_text_stuff():
 		print("Downloading book " + book + "...")
 		await download(text_download_url + book, "user://" + book)
 
-	var text_file = FileAccess.open("user://don_quixote.txt", FileAccess.READ)
+	var text_file = FileAccess.open("user://" + book , FileAccess.READ)
 	regex.compile("\\p{L}+")
 
 	while not text_file.eof_reached():
