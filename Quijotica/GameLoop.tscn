@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://sb21nf2wf7if"]
+[gd_scene load_steps=27 format=3 uid="uid://sb21nf2wf7if"]
 
 [ext_resource type="Script" path="res://GameLoop.gd" id="1_g4qhq"]
 [ext_resource type="FontFile" uid="uid://cdfafwjg3xnk2" path="res://assets/Don_Quixote.ttf" id="2_exqfm"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://y51wof4qdj5u" path="res://Overlay.tscn" id="4_nvca3"]
 [ext_resource type="Script" path="res://Gift.gd" id="4_semax"]
 [ext_resource type="PackedScene" uid="uid://du6qo5hn23re2" path="res://Ranking.tscn" id="5_3lwqm"]
+[ext_resource type="Texture2D" uid="uid://cp3jewq8xgckk" path="res://assets/cervantes.png" id="5_22fm3"]
 [ext_resource type="PackedScene" uid="uid://b0moxwhs6be06" path="res://StartMenu.tscn" id="5_igfx2"]
 [ext_resource type="PackedScene" uid="uid://ufuxfa7b1hb7" path="res://Rules.tscn" id="6_4m6xt"]
 [ext_resource type="PackedScene" uid="uid://bcd613socawx4" path="res://Settings.tscn" id="7_kb56c"]
@@ -441,6 +442,13 @@ offset_right = 80.0
 offset_bottom = 635.0
 texture = SubResource("GradientTexture2D_4658s")
 
+[node name="WaterMark" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+self_modulate = Color(1, 1, 1, 0.101961)
+position = Vector2(443, 407)
+scale = Vector2(1.78736, 1.78736)
+texture = ExtResource("5_22fm3")
+
 [node name="Overlay" parent="." instance=ExtResource("4_nvca3")]
 unique_name_in_owner = true
 visible = false
@@ -486,5 +494,4 @@ libraries = {
 [connection signal="show_settings" from="Overlay" to="." method="_on_overlay_show_settings"]
 [connection signal="show_stats" from="Overlay" to="." method="_on_overlay_show_stats"]
 [connection signal="connect" from="start_menu" to="." method="_on_start_menu_connect"]
-[connection signal="chat_message" from="Gift" to="." method="_on_gift_chat_message"]
 [connection signal="joined_chatroom" from="Gift" to="." method="_on_gift_joined_chatroom"]

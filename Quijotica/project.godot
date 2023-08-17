@@ -23,6 +23,7 @@ config/windows_native_icon="res://customized.ico"
 
 Auth="*res://auth.gd"
 Stats="*res://Stats.gd"
+Config="*res://Config.gd"
 
 [display]
 

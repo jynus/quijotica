@@ -79,3 +79,33 @@ func get_global_status() -> Array:
 		{"user": "Tiempo", "value": str(round(total_time)) + "s (" + float_format(average_time) + "s de media)"},
 	]
 	return global_stats	
+
+func load_state(book: String):
+	var path : String = "user://" + book + ".progress"
+	if not FileAccess.file_exists(path):
+		# We don't have a save to load.
+		word_count = 0
+		users = {}
+		return
+	var save_game = FileAccess.open(path, FileAccess.READ)
+	var json_string = save_game.get_as_text()
+	var json = JSON.new()
+
+	# Check if there is any error while parsing the JSON string, skip in case of failure
+	var parse_result = json.parse(json_string)
+	if not parse_result == OK:
+		print("JSON Parse Error: ", json.get_error_message(), " in ", json_string, " at line ", json.get_error_line())
+		return
+	var load_dict = json.get_data()
+	word_count = load_dict.word_count
+	users = load_dict.users
+
+func save_state(book: String):
+	var save_dict = {
+		"word_count": word_count,
+		"users": users
+	}
+	var save_game = FileAccess.open("user://" + book + ".progress", FileAccess.WRITE)
+	var json_string = JSON.stringify(save_dict)
+	save_game.store_line(json_string)
+	save_game.close()

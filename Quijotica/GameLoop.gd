@@ -2,8 +2,6 @@ extends Node2D
 
 # text stuff
 var text : PackedStringArray = PackedStringArray()
-var line : String
-var line_count : int = 0
 var word : String
 var simplified_word : String
 var previous_word : String
@@ -13,7 +11,7 @@ var large_window : bool = true
 var correct_word_timestamp : float = 0.0
 var regex : RegEx = RegEx.new()
 var text_download_url : String = "https://raw.githubusercontent.com/jynus/quijotica/main/texts/"
-@export var book : String = "don_quixote.txt"
+
 @onready var h_box_container = $HBoxContainer
 @onready var animation_player = $AnimationPlayer
 @onready var stream_player = $AudioStreamPlayer
@@ -70,76 +68,89 @@ func _http_request_completed(result, _response_code, _headers, _body):
 	if result != OK:
 		push_error("Download Failed")
 
-# Called when the node enters the scene tree for the first time.
-func do_text_stuff():
-	if not FileAccess.file_exists("user://" + book):
-		print("Downloading book " + book + "...")
-		await download(text_download_url + book, "user://" + book)
+func update_state():
+	if Stats.word_count > Stats.total_words or Stats.word_count < 0:
+		Stats.word_count = 0  # error, start from 0
 
-	var text_file = FileAccess.open("user://" + book , FileAccess.READ)
-	if book in ["numerica.txt", "pi.txt"]:
+	word = text[Stats.word_count] if Stats.word_count >= 0 and Stats.word_count < Stats.total_words else ""
+	simplified_word = simplify_word(word)
+	previous_word = text[Stats.word_count - 1] if Stats.word_count >= 1 else ""
+	next_word = text[Stats.word_count + 1] if Stats.word_count < Stats.total_words - 1 else ""
+
+	%Word.text = word
+	%PreviousWord.text = previous_word
+
+	%Counter.text = format_integer(Stats.word_count) + " de " + format_integer(Stats.total_words)
+	if Stats.word_count > 0:
+		%PreviousWord.text = ""
+		for i in range(Stats.word_count - 1, max(-1, Stats.word_count - 4), -1):
+			%PreviousWord.text = text[i] + " " + %PreviousWord.text
+	if Stats.word_count < Stats.total_words:
+		%NextWord.text = ""
+		for i in range(Stats.word_count + 1, min(Stats.total_words, Stats.word_count + 4)):
+			%NextWord.text += text[i] + " "
+
+	if len(word) > 3:
+		%Strike.size.x = 571
+		%Strike.position.x = 151
+	else:
+		%Strike.size.x = 287
+		%Strike.position.x = 279
+
+func load_text():
+	if not FileAccess.file_exists("user://" + Config.current_book + ".txt"):
+		print("Downloading book " + Config.current_book + "...")
+		await download(text_download_url + Config.current_book + ".txt", "user://" + Config.current_book + ".txt")
+
+	var text_file = FileAccess.open("user://" + Config.current_book + ".txt" , FileAccess.READ)
+	if Config.current_book in ["numerica", "pi"]:
 		regex.compile("[0-9]+")
 	else:
 		regex.compile("\\p{L}+")
 
+	var word_counter : int = 0
+	var line_counter : int = 0
+	var line : String
 	while not text_file.eof_reached():
 		line = text_file.get_line()
-		line_count += 1
+		line_counter += 1
 		for result in regex.search_all(line):
 			word = result.get_string()
-			Stats.word_count += 1
+			word_counter += 1
 			text.append(word)
-	Stats.total_words = Stats.word_count
-	print("Total lines: ", line_count)
-	print("Total words: ", Stats.word_count)
+	Stats.total_words = word_counter
+	print("Total lines: ", line_counter)
+	print("Total words: ", word_counter)
 	text_file.close()
 
-	Stats.word_count = 0
-	line_count = 0
-	word = text[0] if len(text) > 0 else ""
-	previous_word = ""
-	next_word = text[1] if len(text) > 1 else ""
-	%PreviousWord.text = previous_word
-	for current_word in text:
-		%Counter.text = format_integer(Stats.word_count) + " de " + format_integer(Stats.total_words)
-		if Stats.word_count > 0:
-			previous_word = text[Stats.word_count - 1]
-			%PreviousWord.text = ""
-			for i in range(Stats.word_count - 1, max(-1, Stats.word_count - 4), -1):
-				%PreviousWord.text = text[i] + " " + %PreviousWord.text
-		word = text[Stats.word_count]
-		simplified_word = simplify_word(word)
-		%Word.text = word
-		if Stats.word_count < Stats.total_words:
-			next_word = text[Stats.word_count + 1]
-			%NextWord.text = ""
-			for i in range(Stats.word_count + 1, min(Stats.total_words, Stats.word_count + 4)):
-				%NextWord.text += text[i] + " "
-		else:
-			break  # you win!
+# Called when the node enters the scene tree for the first time.
+func quijotica_loop():
+	while true:
+		if Stats.word_count >= Stats.total_words:
+			break
 
-		if len(word) > 3:
-			%Strike.size.x = 571
-			%Strike.position.x = 151
-		else:
-			%Strike.size.x = 287
-			%Strike.position.x = 279
+		update_state()
 
 		await correct_word
 		Stats.word_count += 1
 		if large_window:
 			animation_player.play("correct_word_2")
 			await animation_player.animation_finished
+	Stats.save_state(Config.current_book)
 	%Credits.win()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	%Overlay.show()
 	get_tree().set_auto_accept_quit(false)
-	do_text_stuff()
 	stream_player.play()
 	stream_player.stream_paused = true
 	get_tree().root.connect("size_changed", _on_viewport_size_changed)
+	load_text()
+	Stats.load_state(Config.current_book)
+	quijotica_loop()
+	%Gift.connect("chat_message", _on_gift_chat_message)
+
 
 func _on_viewport_size_changed():
 	# Do whatever you need to do when the window changes!
@@ -155,6 +166,7 @@ func _on_viewport_size_changed():
 		%Word.label_settings.font_size = 320
 		%Counter.hide()
 		%User.hide()
+		%WaterMark.hide()
 	elif not large_window and get_viewport().size.x >= SMALL_WINDOW_SIZE and get_viewport().size.x >= SMALL_WINDOW_SIZE:
 		large_window = true
 		%Overlay.show()
@@ -166,16 +178,11 @@ func _on_viewport_size_changed():
 		%Word.label_settings.font_size = 280
 		%Counter.show()
 		%User.show()
+		%WaterMark.show()
 
 func _notification(what):
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
 		_exit()
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
-
 
 func _on_start_menu_connect():
 	gift.setup()
@@ -243,6 +250,8 @@ func _exit():
 	gift.leave()
 	#await gift.left_chatroom
 	remove_child(gift)
+	# Save status
+	Stats.save_state(Config.current_book)
 	#await gift.tree_exited
 	await get_tree().create_timer(0.5).timeout
 	get_tree().quit()
@@ -265,3 +274,14 @@ func start_writing_sound():
 
 func stop_writing_sound():
 	stream_player.stream_paused = true
+
+func change_book(new_book: String):
+	Stats.save_state(Config.current_book)
+	Config.current_book = new_book
+	%WaterMark.texture = load(Config.book_list[new_book]["image"])
+	%Gift.disconnect("chat_message", _on_gift_chat_message)
+	Stats.load_state(Config.current_book)
+	text = []
+	load_text()
+	update_state()
+	%Gift.connect("chat_message",  _on_gift_chat_message)
