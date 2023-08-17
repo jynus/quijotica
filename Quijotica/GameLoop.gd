@@ -11,6 +11,7 @@ var large_window : bool = true
 var correct_word_timestamp : float = 0.0
 var regex : RegEx = RegEx.new()
 var text_download_url : String = "https://raw.githubusercontent.com/jynus/quijotica/main/texts/"
+var connected : bool = false
 
 @onready var h_box_container = $HBoxContainer
 @onready var animation_player = $AnimationPlayer
@@ -43,7 +44,7 @@ signal correct_word
 signal old_word
 signal early_word
 signal misspelled_word
-
+signal text_loaded
 
 func format_integer(number: int, thousands_separator: String = " ") -> String:
 	var formatted_number: String = str(number)
@@ -122,6 +123,8 @@ func load_text():
 	print("Total lines: ", line_counter)
 	print("Total words: ", word_counter)
 	text_file.close()
+	%Credits/VictoryMusic.stream = load(Config.book_list[Config.current_book].music)
+	text_loaded.emit()
 
 # Called when the node enters the scene tree for the first time.
 func quijotica_loop():
@@ -149,14 +152,15 @@ func _ready():
 	stream_player.play()
 	stream_player.stream_paused = true
 	get_tree().root.connect("size_changed", _on_viewport_size_changed)
-	load_text()
+	%WaterMark.texture = load(Config.book_list[Config.current_book]["image"])
 	Stats.load_state(Config.current_book)
-
+	load_text()
 
 func _on_viewport_size_changed():
 	# Do whatever you need to do when the window changes!
-	print ("Viewport size changed: ", get_viewport().size)
+	print_debug("Viewport size changed: ", get_viewport().size)
 	if large_window and get_viewport().size.x < SMALL_WINDOW_SIZE or get_viewport().size.x < SMALL_WINDOW_SIZE:
+		print("Enabling zen mode")
 		large_window = false
 		%Overlay.hide()
 		%PreviousWord.hide()
@@ -169,6 +173,7 @@ func _on_viewport_size_changed():
 		%User.hide()
 		%WaterMark.hide()
 	elif not large_window and get_viewport().size.x >= SMALL_WINDOW_SIZE and get_viewport().size.x >= SMALL_WINDOW_SIZE:
+		print("Disabling zen mode")
 		large_window = true
 		%Overlay.show()
 		%PreviousWord.show()
@@ -176,7 +181,7 @@ func _on_viewport_size_changed():
 		$HBoxContainer/MarginContainer.show()
 		$HBoxContainer/MarginContainer2.show()
 		%Word.custom_minimum_size.x = 0
-		%Word.label_settings.font_size = 280
+		%Word.label_settings.font_size = 270
 		%Counter.show()
 		%User.show()
 		%WaterMark.show()
@@ -190,10 +195,9 @@ func _on_start_menu_connect():
 
 
 func _on_gift_joined_chatroom():
+	connected = true
 	%start_menu.hide()
 	correct_word_timestamp = Time.get_unix_time_from_system()
-	quijotica_loop()
-	%Gift.connect("chat_message", _on_gift_chat_message)
 
 func simplify_word(word : String) -> String:
 	var simplified_word : String = ""
@@ -213,6 +217,7 @@ func add_mistake(user):
 func _on_gift_chat_message(sender_data, message):
 	var user : String = sender_data.tags["display-name"]
 	if message == word:
+		%Credits.win()
 		var current_timestamp : float = Time.get_unix_time_from_system()
 		correct_word.emit()
 		if not user in Stats.users:
@@ -249,8 +254,10 @@ func _on_gift_chat_message(sender_data, message):
 
 func _exit():
 	print("Exiting normally...")
-	gift.disconnect("chat_message", _on_gift_chat_message)
-	gift.leave()
+	if connected:
+		gift.disconnect("chat_message", _on_gift_chat_message)
+		gift.leave()
+		connected = false
 	#await gift.left_chatroom
 	remove_child(gift)
 	# Save status
@@ -283,8 +290,11 @@ func change_book(new_book: String):
 	Config.current_book = new_book
 	%WaterMark.texture = load(Config.book_list[new_book]["image"])
 	%Gift.disconnect("chat_message", _on_gift_chat_message)
-	Stats.load_state(Config.current_book)
 	text = []
+	Stats.load_state(Config.current_book)
 	load_text()
+
+func _on_text_loaded():
 	update_state()
-	%Gift.connect("chat_message",  _on_gift_chat_message)
+	quijotica_loop()
+	%Gift.connect("chat_message", _on_gift_chat_message)

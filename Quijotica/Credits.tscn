@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://c5pvbt84a656d"]
+[gd_scene load_steps=9 format=3 uid="uid://c5pvbt84a656d"]
 
 [ext_resource type="Script" path="res://Credits.gd" id="1_ca66x"]
 [ext_resource type="FontFile" uid="uid://cdfafwjg3xnk2" path="res://assets/Don_Quixote.ttf" id="2_3rjo8"]
 [ext_resource type="FontFile" uid="uid://c1xq7d3mhuvt5" path="res://assets/Guttenbg.ttf" id="2_fjxof"]
 [ext_resource type="PackedScene" uid="uid://dyj7w4bn7bmcb" path="res://BackButton.tscn" id="2_kyay4"]
+[ext_resource type="AudioStream" uid="uid://dvh7btsjwicbs" path="res://assets/Victory.mp3" id="5_ey4up"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_d87yp"]
 font = ExtResource("2_fjxof")
@@ -102,5 +103,10 @@ offset_left = 21.0
 offset_top = 37.0
 offset_right = 135.0
 offset_bottom = 113.0
+
+[node name="VictoryMusic" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("5_ey4up")
+volume_db = -20.0
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]

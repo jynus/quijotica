@@ -26,7 +26,7 @@ font_color = Color(0.0235294, 0.0235294, 0.0235294, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_ag4df"]
 font = ExtResource("2_exqfm")
-font_size = 160
+font_size = 150
 font_color = Color(0.627451, 0.627451, 0.627451, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_xisbo"]
@@ -37,7 +37,7 @@ shadow_size = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_4xpe7"]
 font = ExtResource("2_exqfm")
-font_size = 160
+font_size = 150
 font_color = Color(0.627451, 0.627451, 0.627451, 1)
 shadow_size = 0
 
@@ -445,8 +445,8 @@ texture = SubResource("GradientTexture2D_4658s")
 [node name="WaterMark" type="Sprite2D" parent="."]
 unique_name_in_owner = true
 self_modulate = Color(1, 1, 1, 0.101961)
-position = Vector2(443, 407)
-scale = Vector2(1.78736, 1.78736)
+position = Vector2(416.5, 434.109)
+scale = Vector2(1.63506, 1.63506)
 texture = ExtResource("5_22fm3")
 
 [node name="Overlay" parent="." instance=ExtResource("4_nvca3")]
@@ -489,6 +489,7 @@ libraries = {
 "": SubResource("AnimationLibrary_ayt2g")
 }
 
+[connection signal="text_loaded" from="." to="." method="_on_text_loaded"]
 [connection signal="show_credits" from="Overlay" to="." method="_on_overlay_show_credits"]
 [connection signal="show_rules" from="Overlay" to="." method="_on_overlay_show_rules"]
 [connection signal="show_settings" from="Overlay" to="." method="_on_overlay_show_settings"]

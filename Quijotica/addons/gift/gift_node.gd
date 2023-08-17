@@ -95,6 +95,7 @@ var last_keepalive : int = 0
 
 var websocket : WebSocketPeer
 var server : TCPServer = TCPServer.new()
+var redirect_uri : String = "http://localhost:18297/this_is_a_long_string_to_prevent_it_from_showing_up_in_your_browser_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 var peer : StreamPeerTCP
 var connected : bool = false
 var user_regex : RegEx = RegEx.new()
@@ -183,7 +184,7 @@ func get_token() -> void:
 	if (scopes.size() > 0):
 		scope += scopes[scopes.size() - 1]
 	scope = scope.uri_encode()
-	OS.shell_open("https://id.twitch.tv/oauth2/authorize?response_type=code&client_id=" + client_id + "&redirect_uri=http://localhost:18297&scope=" + scope)
+	OS.shell_open("https://id.twitch.tv/oauth2/authorize?response_type=code&client_id=" + client_id + "&redirect_uri=" + redirect_uri + "&scope=" + scope)
 	server.listen(18297)
 	print("Waiting for user to login.")
 	while(!peer):
@@ -194,7 +195,7 @@ func get_token() -> void:
 		if (peer.get_available_bytes() > 0):
 			var response = peer.get_utf8_string(peer.get_available_bytes())
 			if (response == ""):
-				print("Empty response. Check if your redirect URL is set to http://localhost:18297.")
+				print("Empty response. Check if your redirect URL is set to " + redirect_uri + ".")
 				return
 			var start : int = response.find("?")
 			response = response.substr(start + 1, response.find(" ", start) - start)
@@ -214,7 +215,7 @@ func get_token() -> void:
 				peer.disconnect_from_host()
 				var request : HTTPRequest = HTTPRequest.new()
 				add_child(request)
-				request.request("https://id.twitch.tv/oauth2/token", [USER_AGENT, "Content-Type: application/x-www-form-urlencoded"], HTTPClient.METHOD_POST, "client_id=" + client_id + "&client_secret=" + client_secret + "&code=" + data["code"] + "&grant_type=authorization_code&redirect_uri=http://localhost:18297")
+				request.request("https://id.twitch.tv/oauth2/token", [USER_AGENT, "Content-Type: application/x-www-form-urlencoded"], HTTPClient.METHOD_POST, "client_id=" + client_id + "&client_secret=" + client_secret + "&code=" + data["code"] + "&grant_type=authorization_code&redirect_uri=" + redirect_uri)
 				var answer = await(request.request_completed)
 				if (!DirAccess.dir_exists_absolute("user://gift/auth")):
 					DirAccess.make_dir_recursive_absolute("user://gift/auth")

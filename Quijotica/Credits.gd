@@ -30,6 +30,7 @@ func _on_visibility_changed():
 func win():
 	var num_users = refresh_data()
 	show()
+	%VictoryMusic.play()
 	%CreditsTitle.label_settings.font_size = 50
 	%CreditsTitle.text = "Confía en el tiempo, que suele dar dulces salidas a muchas amargas dificultades"
 	var scrollBar : VScrollBar = scroll.get_v_scroll_bar()
