@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://b0moxwhs6be06"]
 
-[ext_resource type="Texture2D" uid="uid://lymqpgvs3m44" path="res://assets/Don_Quixote_fighting_windmills.jpg" id="1_0xyxc"]
 [ext_resource type="Script" path="res://Menu.gd" id="1_cyngt"]
+[ext_resource type="Texture2D" uid="uid://byc0d03656jqv" path="res://assets/Karl_Marx_001.png" id="2_2ybsb"]
 [ext_resource type="FontFile" uid="uid://c1xq7d3mhuvt5" path="res://assets/Guttenbg.ttf" id="2_p7aje"]
 [ext_resource type="FontFile" uid="uid://cdfafwjg3xnk2" path="res://assets/Don_Quixote.ttf" id="3_8jn5h"]
 
@@ -28,12 +28,12 @@ script = ExtResource("1_cyngt")
 
 [node name="Background" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(800, 800)
-color = Color(0.980453, 0.980453, 0.980453, 1)
+color = Color(0.968627, 0.952941, 0.968627, 1)
 
 [node name="Image" type="Sprite2D" parent="Background"]
 position = Vector2(20, 221)
 scale = Vector2(0.63788, 0.63788)
-texture = ExtResource("1_0xyxc")
+texture = ExtResource("2_2ybsb")
 centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 1195.3, 880)

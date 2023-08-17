@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://lymqpgvs3m44"
-path="res://.godot/imported/Don_Quixote_fighting_windmills.jpg-6151cc4cc942dc2685fa1b806e3886f6.ctex"
+uid="uid://b6ly5hr561aej"
+path="res://.godot/imported/Don_Quixote_fighting_windmills.png-74906af8cbebf8a4cf7d9562f7cd1ea2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Don_Quixote_fighting_windmills.jpg"
-dest_files=["res://.godot/imported/Don_Quixote_fighting_windmills.jpg-6151cc4cc942dc2685fa1b806e3886f6.ctex"]
+source_file="res://assets/Don_Quixote_fighting_windmills.png"
+dest_files=["res://.godot/imported/Don_Quixote_fighting_windmills.png-74906af8cbebf8a4cf7d9562f7cd1ea2.ctex"]
 
 [params]
 

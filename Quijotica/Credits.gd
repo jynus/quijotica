@@ -26,6 +26,8 @@ func update_users() -> int:
 func _on_visibility_changed():
 	if visible:
 		refresh_data()
+	else:
+		%VictoryMusic.stop()
 
 func win():
 	var num_users = refresh_data()

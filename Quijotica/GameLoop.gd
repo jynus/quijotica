@@ -89,13 +89,10 @@ func update_state():
 	if Stats.word_count < Stats.total_words:
 		for i in range(Stats.word_count + 1, min(Stats.total_words, Stats.word_count + 4)):
 			%NextWord.text += text[i] + " "
+		%NextWord.text = " " + %NextWord.text 
 
-	if len(word) > 3:
-		%Strike.size.x = 571
-		%Strike.position.x = 151
-	else:
-		%Strike.size.x = 287
-		%Strike.position.x = 279
+	%Strike.size.x = len(%Word.text) * 75
+	%Strike.global_position.x = 400 - %Strike.size.x / 2
 
 func load_text():
 	if not FileAccess.file_exists("user://" + Config.current_book + ".txt"):
@@ -152,9 +149,46 @@ func _ready():
 	stream_player.play()
 	stream_player.stream_paused = true
 	get_tree().root.connect("size_changed", _on_viewport_size_changed)
-	%WaterMark.texture = load(Config.book_list[Config.current_book]["image"])
+	update_book_decoration()
 	Stats.load_state(Config.current_book)
 	load_text()
+
+func redraw_window():
+	var font = "res://assets/coolvetica rg.otf" if Config.accessible_font else "res://assets/Don_Quixote.ttf"
+	%PreviousWord.label_settings.font = load(font)
+	%Word.label_settings.font = load(font)
+	%NextWord.label_settings.font = load(font)
+
+	if large_window:
+		%Overlay.show()
+		%PreviousWord.show()
+		%NextWord.show()
+		$HBoxContainer/MarginContainer.show()
+		$HBoxContainer/MarginContainer2.show()
+		$HBoxContainer.custom_minimum_size.x = 1600
+		%Word.custom_minimum_size.x = 0
+		%Word.label_settings.font_size = 120 if Config.accessible_font else 270
+		%PreviousWord.label_settings.font_size = 75 if Config.accessible_font else 180
+		%NextWord.label_settings.font_size = 75 if Config.accessible_font else 180
+		%Counter.show()
+		%User.show()
+		%WaterMark.show()
+		$HBoxContainer.global_position = \
+			Vector2(400 - $HBoxContainer.size.x / 2, \
+					120 if Config.accessible_font else 182)
+	else:
+		%Overlay.hide()
+		%PreviousWord.hide()
+		%NextWord.hide()
+		$HBoxContainer/MarginContainer.hide()
+		$HBoxContainer/MarginContainer2.hide()
+		$HBoxContainer.global_position = Vector2(0, 150)
+		$HBoxContainer.custom_minimum_size.x = 1600
+		%Word.custom_minimum_size.x = 800
+		%Word.label_settings.font_size = 140 if Config.accessible_font else 320
+		%Counter.hide()
+		%User.hide()
+		%WaterMark.hide()
 
 func _on_viewport_size_changed():
 	# Do whatever you need to do when the window changes!
@@ -162,29 +196,11 @@ func _on_viewport_size_changed():
 	if large_window and get_viewport().size.x < SMALL_WINDOW_SIZE or get_viewport().size.x < SMALL_WINDOW_SIZE:
 		print("Enabling zen mode")
 		large_window = false
-		%Overlay.hide()
-		%PreviousWord.hide()
-		%NextWord.hide()
-		$HBoxContainer/MarginContainer.hide()
-		$HBoxContainer/MarginContainer2.hide()
-		%Word.custom_minimum_size.x = 800
-		%Word.label_settings.font_size = 320
-		%Counter.hide()
-		%User.hide()
-		%WaterMark.hide()
+		redraw_window()
 	elif not large_window and get_viewport().size.x >= SMALL_WINDOW_SIZE and get_viewport().size.x >= SMALL_WINDOW_SIZE:
 		print("Disabling zen mode")
 		large_window = true
-		%Overlay.show()
-		%PreviousWord.show()
-		%NextWord.show()
-		$HBoxContainer/MarginContainer.show()
-		$HBoxContainer/MarginContainer2.show()
-		%Word.custom_minimum_size.x = 0
-		%Word.label_settings.font_size = 270
-		%Counter.show()
-		%User.show()
-		%WaterMark.show()
+		redraw_window()
 
 func _notification(what):
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
@@ -196,6 +212,45 @@ func _on_start_menu_connect():
 
 func _on_gift_joined_chatroom():
 	connected = true
+	var username : String = %Gift.username.to_lower()
+	match username:
+		"isaacsanchez_art":
+			%User.text = "Esperant malparits ..."
+		"rothiotome":
+			%User.text = "Esperando colgajos ..."
+		"psuzume":
+			%User.text = "Esperando muelas ..."
+		"idlesir":
+			%User.text = "Esperando manos sexis ..."
+		"melenitasdev":
+			%User.text = "Esperando TikToks ..."
+		"afor_digital":
+			%User.text = "Esperando formularios de contacto ..."
+		"niv3k_el_pato":
+			%User.text = "Esperando patitos ..."
+		"papajoshhh":
+			%User.text = "Esperando Silksong ..."
+		"kerk1":
+			%User.text = "berriketan zain ..."
+		"senseidani":
+			%User.text = "Esperando a Ame y Suna ..."
+		"algebrodev":
+			%User.text = "Esperando que cargue Unity ..."
+		"catisa":
+			%User.text = "Esperando siguiente release de FromSoftware ..."
+		"ransilftw":
+			%User.text = "Esperando a la Nintendo Direct ..."
+		"sailorfu":
+			%User.text = "Esperando croquetas para Shiva ..."
+		"altaskur":
+			%User.text = "Haciendo async/await en el chat ..."
+		"carmenpilar26":
+			%User.text = "Esperando siguiente release de FromSoftware ..."
+		"lascosicasdejoserra":
+			%User.text = "Esperando panes ..."
+		_:
+			%User.text = "Aguardando ruines ..."
+
 	%start_menu.hide()
 	correct_word_timestamp = Time.get_unix_time_from_system()
 
@@ -217,7 +272,6 @@ func add_mistake(user):
 func _on_gift_chat_message(sender_data, message):
 	var user : String = sender_data.tags["display-name"]
 	if message == word:
-		%Credits.win()
 		var current_timestamp : float = Time.get_unix_time_from_system()
 		correct_word.emit()
 		if not user in Stats.users:
@@ -285,10 +339,16 @@ func start_writing_sound():
 func stop_writing_sound():
 	stream_player.stream_paused = true
 
+func update_book_decoration():
+	%WaterMark.texture = load(Config.book_list[Config.current_book]["image"])
+	%start_menu/Background/Image.texture = load(Config.book_list[Config.current_book]["background"])
+	%start_menu/Background/Title.text = Config.book_list[Config.current_book]["title"]
+	%start_menu/Background/Button.text = Config.book_list[Config.current_book]["conectar"]	
+
 func change_book(new_book: String):
 	Stats.save_state(Config.current_book)
 	Config.current_book = new_book
-	%WaterMark.texture = load(Config.book_list[new_book]["image"])
+	update_book_decoration()
 	%Gift.disconnect("chat_message", _on_gift_chat_message)
 	text = []
 	Stats.load_state(Config.current_book)
@@ -296,5 +356,6 @@ func change_book(new_book: String):
 
 func _on_text_loaded():
 	update_state()
+	redraw_window()
 	quijotica_loop()
 	%Gift.connect("chat_message", _on_gift_chat_message)
