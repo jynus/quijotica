@@ -46,6 +46,7 @@ func get_top_users_by_accuracy() -> Array:
 	for user in top_users:
 		user["value"] = pct_format(user["value"])
 	return top_users.slice(0, MAX_USERS)
+
 func get_top_users_by_errors() -> Array:
 	var top_users : Array = []
 	for user in users:

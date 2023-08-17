@@ -78,15 +78,14 @@ func update_state():
 	next_word = text[Stats.word_count + 1] if Stats.word_count < Stats.total_words - 1 else ""
 
 	%Word.text = word
-	%PreviousWord.text = previous_word
-
 	%Counter.text = format_integer(Stats.word_count) + " de " + format_integer(Stats.total_words)
+	%PreviousWord.text = ""
+	%NextWord.text = ""
+
 	if Stats.word_count > 0:
-		%PreviousWord.text = ""
 		for i in range(Stats.word_count - 1, max(-1, Stats.word_count - 4), -1):
 			%PreviousWord.text = text[i] + " " + %PreviousWord.text
 	if Stats.word_count < Stats.total_words:
-		%NextWord.text = ""
 		for i in range(Stats.word_count + 1, min(Stats.total_words, Stats.word_count + 4)):
 			%NextWord.text += text[i] + " "
 
@@ -111,13 +110,14 @@ func load_text():
 	var word_counter : int = 0
 	var line_counter : int = 0
 	var line : String
+	var current_word : String
 	while not text_file.eof_reached():
 		line = text_file.get_line()
 		line_counter += 1
 		for result in regex.search_all(line):
-			word = result.get_string()
+			current_word = result.get_string()
 			word_counter += 1
-			text.append(word)
+			text.append(current_word)
 	Stats.total_words = word_counter
 	print("Total lines: ", line_counter)
 	print("Total words: ", word_counter)
@@ -133,6 +133,9 @@ func quijotica_loop():
 
 		await correct_word
 		Stats.word_count += 1
+		
+		if Stats.word_count % 100 == 0:
+			Stats.save_state(Config.current_book)
 		if large_window:
 			animation_player.play("correct_word_2")
 			await animation_player.animation_finished
@@ -148,8 +151,6 @@ func _ready():
 	get_tree().root.connect("size_changed", _on_viewport_size_changed)
 	load_text()
 	Stats.load_state(Config.current_book)
-	quijotica_loop()
-	%Gift.connect("chat_message", _on_gift_chat_message)
 
 
 func _on_viewport_size_changed():
@@ -191,6 +192,8 @@ func _on_start_menu_connect():
 func _on_gift_joined_chatroom():
 	%start_menu.hide()
 	correct_word_timestamp = Time.get_unix_time_from_system()
+	quijotica_loop()
+	%Gift.connect("chat_message", _on_gift_chat_message)
 
 func simplify_word(word : String) -> String:
 	var simplified_word : String = ""
