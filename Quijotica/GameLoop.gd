@@ -7,6 +7,7 @@ var simplified_word : String
 var previous_word : String
 var next_word : String
 var large_window : bool = true
+var ignore_chat : bool = false
 
 var correct_word_timestamp : float = 0.0
 var regex : RegEx = RegEx.new()
@@ -68,7 +69,8 @@ func format_integer(number: int, thousands_separator: String = " ") -> String:
 
 func download(link, path):
 	var http = $HTTPRequest
-	http.connect("request_completed", _http_request_completed)
+	if not http.is_connected("request_completed", _http_request_completed):
+		http.connect("request_completed", _http_request_completed)
 
 	http.set_download_file(path)
 	var request = http.request(link)
@@ -165,6 +167,8 @@ func _ready():
 	update_book_decoration()
 	Stats.load_state(Config.current_book)
 	load_text()
+	await %Gift.chat_message
+	quijotica_loop()
 
 func _process(delta):
 	if Input.is_action_pressed("ui_cancel"):
@@ -310,6 +314,8 @@ func ban_or_ignore(user: String, reason: ban_reason):
 	banned_users[user.to_lower()] = timestamp + Config.ban_time
 
 func _on_gift_chat_message(sender_data, message):
+	if ignore_chat:
+		return
 	var user : String = sender_data.tags["display-name"]
 	var timestamp : int = Time.get_unix_time_from_system()
 	if user.to_lower() in banned_users and banned_users[user.to_lower()] > timestamp:
@@ -365,6 +371,7 @@ func _on_gift_chat_message(sender_data, message):
 
 func _exit():
 	print("Exiting normally...")
+	ignore_chat = true
 	if connected:
 		gift.disconnect("chat_message", _on_gift_chat_message)
 		gift.leave()
@@ -407,7 +414,7 @@ func change_book(new_book: String):
 	Stats.save_state(Config.current_book)
 	Config.current_book = new_book
 	update_book_decoration()
-	%Gift.disconnect("chat_message", _on_gift_chat_message)
+	ignore_chat = true
 	text = []
 	Stats.load_state(Config.current_book)
 	load_text()
@@ -415,13 +422,15 @@ func change_book(new_book: String):
 func _on_text_loaded():
 	update_state()
 	redraw_window()
-	quijotica_loop()
-	%Gift.connect("chat_message", _on_gift_chat_message)
+	#quijotica_loop()
+	ignore_chat = false
 
 func _on_reset_all_data():
 	print("Resetting all data...")
+	ignore_chat = true
 	if connected:
-		gift.disconnect("chat_message", _on_gift_chat_message)
+		if gift.is_connected("chat_message", _on_gift_chat_message):
+			gift.disconnect("chat_message", _on_gift_chat_message)
 		gift.leave()
 		connected = false
 	#await gift.left_chatroom
