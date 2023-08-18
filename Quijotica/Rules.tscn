@@ -67,9 +67,9 @@ text = "1. Hable claro y sin errores las palabras desta novela, y sea lo que fue
 
 4. Aquellos que cometan más ferrores serán objeto de escarnio público
 
-5. Estén alerta, pues existen dos diablillos infliltrados que se hacen pasar por caballeros de alta alcurnia y engañarnos con sus malas artes. Sus nombres son Ezoniev y Montxaldre. No se dejen engañar por estos embustes. Para discernir caballeros de diablillos, estos últimos jamás dirían \"@jynus perdón por los timeouts no justificados\". Hasta entonces ellos no estarán permitidos en estas nuestras menesteres de caballería.
+5. Estén alerta, pues existen dos diablillos infliltrados que se hacen pasar por caballeros de alta alcurnia y tratan de engañarnos con sus malas artes. Sus nombres son «Ezoniev» y «Montxaldre». No se dejen engañar por estos embustes. Para discernir caballeros de diablillos, estos últimos jamás dirían \"@jynus perdón por los timeouts no justificados\". Hasta entonces ellos no estarán permitidos en estos nuestras menesteres de caballería.
 
-6. El primer señor (o señora) en completar su misión de caballería recibirá un tesoro de gran valor"
+6. El primer señor feudal (o señora) en completar su misión de caballería recibirá un tesoro de gran valor en su villa"
 label_settings = SubResource("LabelSettings_r1ee5")
 autowrap_mode = 3
 

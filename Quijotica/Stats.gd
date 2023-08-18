@@ -16,14 +16,14 @@ func compare_by_value_inverse(a: Dictionary, b: Dictionary) -> bool:
 func get_all_users_in_order_of_appearance() -> Array:
 	var top_users : Array = []
 	for user in users:
-		top_users.append({"user": user, "value": users[user]["words"]})
+		top_users.insert(0, {"user": user, "value": users[user]["words"]})
 	return top_users
 
 func get_top_users_by_words() -> Array:
 	var top_users : Array = []
 	for user in users:
 		top_users.append({"user": user, "value": users[user]["words"]})
-	top_users.sort_custom(compare_by_value)
+	top_users.sort_custom(compare_by_value_inverse)
 	return top_users.slice(0, MAX_USERS)
 
 func get_top_users_by_speed() -> Array:
@@ -32,7 +32,7 @@ func get_top_users_by_speed() -> Array:
 		if users[user]["words"] != 0:
 			top_users.append({"user": user, "value": float(users[user]["time"]) / float(users[user]["words"])})
 
-	top_users.sort_custom(compare_by_value_inverse)
+	top_users.sort_custom(compare_by_value)
 	for user in top_users:
 		user["value"] = float_format(user["value"]) + "s"
 	return top_users.slice(0, MAX_USERS)
@@ -42,7 +42,7 @@ func get_top_users_by_accuracy() -> Array:
 	for user in users:
 		if users[user]["errors"] > 0 or users[user]["words"] >= MIN_WORDS_FOR_ACCURACY:
 			top_users.append({"user": user, "value": 100.0 * users[user]["words"] / (users[user]["words"] + users[user]["errors"])})
-	top_users.sort_custom(compare_by_value)
+	top_users.sort_custom(compare_by_value_inverse)
 	for user in top_users:
 		user["value"] = pct_format(user["value"])
 	return top_users.slice(0, MAX_USERS)

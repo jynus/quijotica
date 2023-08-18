@@ -30,6 +30,18 @@ func update_settings():
 		%AccessibleFontCheckBox.text = " Activada"
 	else:
 		%AccessibleFontCheckBox.text = " Desactivada"
+	%WriteChatCheckBox.button_pressed = Config.chat_enabled
+	if Config.chat_enabled:
+		%WriteChatCheckBox.text = " Activada"
+	else:
+		%WriteChatCheckBox.text = " Desactivada"
+	%BanTimeEditText.text = str(Config.ban_time)
+	if Config.always_on_top:
+		%AlwaysOnTopCheckBox.text = " Activada"
+	else:
+		%AlwaysOnTopCheckBox.text = " Desactivada"
+	%AlwaysOnTopCheckBox.button_pressed = Config.always_on_top
+	DisplayServer.window_set_flag(DisplayServer.WindowFlags.WINDOW_FLAG_ALWAYS_ON_TOP, Config.always_on_top)
 
 func book_pressed(button: BaseButton):
 	book_changed.emit(button.get_parent().id)
@@ -66,3 +78,24 @@ func _on_deletion_dialog_confirmed():
 
 func _on_hidden():
 	Config.save_options()
+
+func _on_write_chat_toggled(button_pressed):
+	if button_pressed:
+		%WriteChatCheckBox.text = " Activada"
+	else:
+		%WriteChatCheckBox.text = " Desactivada"
+	Config.chat_enabled = button_pressed
+
+
+func _on_ban_time_changed(new_text):
+	if new_text.is_valid_int():
+		Config.ban_time = int(new_text)
+
+
+func _on_always_on_top_toggled(button_pressed):
+	if button_pressed:
+		%AlwaysOnTopCheckBox.text = " Activada"
+	else:
+		%AlwaysOnTopCheckBox.text = " Desactivada"
+	Config.always_on_top = button_pressed
+	DisplayServer.window_set_flag(DisplayServer.WindowFlags.WINDOW_FLAG_ALWAYS_ON_TOP, Config.always_on_top)
