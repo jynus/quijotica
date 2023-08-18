@@ -149,6 +149,8 @@ func _ready():
 	stream_player.play()
 	stream_player.stream_paused = true
 	get_tree().root.connect("size_changed", _on_viewport_size_changed)
+	Config.load_options()
+	%Settings.update_settings()
 	update_book_decoration()
 	Stats.load_state(Config.current_book)
 	load_text()
@@ -316,6 +318,7 @@ func _exit():
 	remove_child(gift)
 	# Save status
 	Stats.save_state(Config.current_book)
+	Config.save_options()
 	#await gift.tree_exited
 	await get_tree().create_timer(0.5).timeout
 	get_tree().quit()
@@ -359,3 +362,21 @@ func _on_text_loaded():
 	redraw_window()
 	quijotica_loop()
 	%Gift.connect("chat_message", _on_gift_chat_message)
+
+
+func _on_reset_all_data():
+	print("Resetting all data...")
+	if connected:
+		gift.disconnect("chat_message", _on_gift_chat_message)
+		gift.leave()
+		connected = false
+	#await gift.left_chatroom
+	remove_child(gift)
+	print("About to move to trash directory: " + OS.get_user_data_dir())
+	OS.move_to_trash(OS.get_user_data_dir())
+	await get_tree().create_timer(0.5).timeout
+	print("Launching new game instance...")
+	#OS.execute(OS.get_executable_path(), OS.get_cmdline_args())
+	OS.create_instance(OS.get_cmdline_args())
+	print("Now quitting.")
+	get_tree().quit()

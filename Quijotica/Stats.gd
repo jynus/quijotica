@@ -51,7 +51,7 @@ func get_top_users_by_errors() -> Array:
 	var top_users : Array = []
 	for user in users:
 		top_users.append({"user": user, "value": users[user]["errors"]})
-	top_users.sort_custom(compare_by_value)
+	top_users.sort_custom(compare_by_value_inverse)
 	return top_users.slice(0, MAX_USERS)
 
 func pct_format(value: float) -> String:
@@ -90,6 +90,7 @@ func load_state(book: String):
 		return
 	var save_game = FileAccess.open(path, FileAccess.READ)
 	var json_string = save_game.get_as_text()
+	save_game.close()
 	var json = JSON.new()
 
 	# Check if there is any error while parsing the JSON string, skip in case of failure
@@ -100,6 +101,7 @@ func load_state(book: String):
 	var load_dict = json.get_data()
 	word_count = load_dict.word_count
 	users = load_dict.users
+	print("Loaded " + book + " progress from file.")
 
 func save_state(book: String):
 	var save_dict = {
@@ -110,3 +112,4 @@ func save_state(book: String):
 	var json_string = JSON.stringify(save_dict)
 	save_game.store_line(json_string)
 	save_game.close()
+	print("Saved " + book + "progress to disk.")

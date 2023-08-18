@@ -496,5 +496,8 @@ libraries = {
 [connection signal="show_rules" from="Overlay" to="." method="_on_overlay_show_rules"]
 [connection signal="show_settings" from="Overlay" to="." method="_on_overlay_show_settings"]
 [connection signal="show_stats" from="Overlay" to="." method="_on_overlay_show_stats"]
+[connection signal="book_changed" from="Settings" to="." method="change_book"]
+[connection signal="redraw_window" from="Settings" to="." method="redraw_window"]
+[connection signal="reset_all_data" from="Settings" to="." method="_on_reset_all_data"]
 [connection signal="connect" from="start_menu" to="." method="_on_start_menu_connect"]
 [connection signal="joined_chatroom" from="Gift" to="." method="_on_gift_joined_chatroom"]

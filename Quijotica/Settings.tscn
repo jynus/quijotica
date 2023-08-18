@@ -1,8 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://bcd613socawx4"]
+[gd_scene load_steps=13 format=3 uid="uid://bcd613socawx4"]
 
+[ext_resource type="Script" path="res://Settings.gd" id="1_2np0w"]
 [ext_resource type="FontFile" uid="uid://c1xq7d3mhuvt5" path="res://assets/Guttenbg.ttf" id="1_ng4l6"]
 [ext_resource type="PackedScene" uid="uid://dyj7w4bn7bmcb" path="res://BackButton.tscn" id="2_3jt6k"]
 [ext_resource type="FontFile" uid="uid://cdfafwjg3xnk2" path="res://assets/Don_Quixote.ttf" id="3_17d17"]
+[ext_resource type="Texture2D" uid="uid://it22junytqvl" path="res://assets/checked_box.png" id="4_c85y1"]
+[ext_resource type="Texture2D" uid="uid://bkejig8m3k47o" path="res://assets/unchecked_box.png" id="5_1j1wg"]
+[ext_resource type="Texture2D" uid="uid://b5w080xxe134s" path="res://assets/closed_dot.png" id="7_a5n4s"]
+[ext_resource type="AudioStream" uid="uid://bj8kaabmej0xu" path="res://assets/pencil-29272.mp3" id="8_402ik"]
+[ext_resource type="StyleBox" uid="uid://b61ywa7e57y0r" path="res://ActionButtonStyle.tres" id="8_m6mbw"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_bjmr7"]
 font = ExtResource("1_ng4l6")
@@ -14,7 +20,12 @@ font = ExtResource("3_17d17")
 font_size = 100
 font_color = Color(0, 0, 0, 1)
 
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_74d5j"]
+color = Color(0.0470588, 0.0470588, 0.0470588, 1)
+thickness = 15
+
 [node name="Settings" type="Node2D"]
+script = ExtResource("1_2np0w")
 
 [node name="Background" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(800, 800)
@@ -48,35 +59,128 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
 
-[node name="FontAcessibility" type="Label" parent="ScrollContainer/SettingsContainer"]
+[node name="AccessibleFontOption" type="HBoxContainer" parent="ScrollContainer/SettingsContainer"]
+layout_mode = 2
+
+[node name="MarginContainer3" type="MarginContainer" parent="ScrollContainer/SettingsContainer/AccessibleFontOption"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="SelectBookLabel" type="Label" parent="ScrollContainer/SettingsContainer/AccessibleFontOption"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Tipo de letra accesible:"
+label_settings = SubResource("LabelSettings_igclp")
+vertical_alignment = 2
+
+[node name="MarginContainer4" type="MarginContainer" parent="ScrollContainer/SettingsContainer/AccessibleFontOption"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="AccessibleFontCheckbox" type="HBoxContainer" parent="ScrollContainer/SettingsContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/SettingsContainer/AccessibleFontCheckbox"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+
+[node name="AccessibleFontCheckBox" type="CheckBox" parent="ScrollContainer/SettingsContainer/AccessibleFontCheckbox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_colors/font_color = Color(0.12549, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0.0941176, 0, 1)
+theme_override_colors/font_hover_color = Color(0.270588, 0.0313726, 0.0313726, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.0784314, 0.239216, 0.117647, 1)
+theme_override_fonts/font = ExtResource("3_17d17")
+theme_override_font_sizes/font_size = 75
+theme_override_icons/checked = ExtResource("4_c85y1")
+theme_override_icons/unchecked = ExtResource("5_1j1wg")
+text = " Desactivada"
+flat = true
+icon_alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="ScrollContainer/SettingsContainer/AccessibleFontCheckbox"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+
+[node name="SelectBookOptions" type="HBoxContainer" parent="ScrollContainer/SettingsContainer"]
+layout_mode = 2
+
+[node name="MarginContainer3" type="MarginContainer" parent="ScrollContainer/SettingsContainer/SelectBookOptions"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="SelectBookLabel" type="Label" parent="ScrollContainer/SettingsContainer/SelectBookOptions"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Libro activo: "
+label_settings = SubResource("LabelSettings_igclp")
+vertical_alignment = 1
+
+[node name="MarginContainer4" type="MarginContainer" parent="ScrollContainer/SettingsContainer/SelectBookOptions"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="BookOptions" type="VBoxContainer" parent="ScrollContainer/SettingsContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="VolumeOption" type="HBoxContainer" parent="ScrollContainer/SettingsContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/SettingsContainer/VolumeOption"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="SelectBookLabel2" type="Label" parent="ScrollContainer/SettingsContainer/VolumeOption"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Volumen:"
+label_settings = SubResource("LabelSettings_igclp")
+vertical_alignment = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="ScrollContainer/SettingsContainer/VolumeOption"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="VolumeSlider" type="HBoxContainer" parent="ScrollContainer/SettingsContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/SettingsContainer/VolumeSlider"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="VolumeSlider" type="HSlider" parent="ScrollContainer/SettingsContainer/VolumeSlider"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
 size_flags_vertical = 1
-text = "Tipado accesible"
-label_settings = SubResource("LabelSettings_igclp")
-horizontal_alignment = 1
+theme_override_icons/grabber = ExtResource("7_a5n4s")
+theme_override_icons/grabber_highlight = ExtResource("7_a5n4s")
+theme_override_styles/slider = SubResource("StyleBoxLine_74d5j")
+max_value = 150.0
+
+[node name="MarginContainer2" type="MarginContainer" parent="ScrollContainer/SettingsContainer/VolumeSlider"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
 
 [node name="Theme" type="Label" parent="ScrollContainer/SettingsContainer"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 1
 text = "Tema"
 label_settings = SubResource("LabelSettings_igclp")
 horizontal_alignment = 1
 
-[node name="Volume" type="Label" parent="ScrollContainer/SettingsContainer"]
-layout_mode = 2
-size_flags_vertical = 1
-text = "Volumen"
-label_settings = SubResource("LabelSettings_igclp")
-horizontal_alignment = 1
-
-[node name="Book" type="Label" parent="ScrollContainer/SettingsContainer"]
-layout_mode = 2
-size_flags_vertical = 1
-text = "Cambiar libro"
-label_settings = SubResource("LabelSettings_igclp")
-horizontal_alignment = 1
-
 [node name="BansAndLength" type="Label" parent="ScrollContainer/SettingsContainer"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 1
 text = "Activar bans (y timeout)"
@@ -84,6 +188,7 @@ label_settings = SubResource("LabelSettings_igclp")
 horizontal_alignment = 1
 
 [node name="Vips" type="Label" parent="ScrollContainer/SettingsContainer"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 1
 text = "Activar VIPs"
@@ -91,6 +196,7 @@ label_settings = SubResource("LabelSettings_igclp")
 horizontal_alignment = 1
 
 [node name="ModIgnore" type="Label" parent="ScrollContainer/SettingsContainer"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 1
 text = "Ignorar mods
@@ -99,6 +205,7 @@ label_settings = SubResource("LabelSettings_igclp")
 horizontal_alignment = 1
 
 [node name="Exclusivity" type="Label" parent="ScrollContainer/SettingsContainer"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 1
 text = "Activar Exclusividad
@@ -106,9 +213,67 @@ text = "Activar Exclusividad
 label_settings = SubResource("LabelSettings_igclp")
 horizontal_alignment = 1
 
-[node name="Reset" type="Label" parent="ScrollContainer/SettingsContainer"]
+[node name="ResetOption" type="HBoxContainer" parent="ScrollContainer/SettingsContainer"]
 layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/SettingsContainer/ResetOption"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="ResetLabel" type="Label" parent="ScrollContainer/SettingsContainer/ResetOption"]
+layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 1
-text = "Resetear todo"
+text = "Resetear datos: "
 label_settings = SubResource("LabelSettings_igclp")
-horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="ScrollContainer/SettingsContainer/ResetOption"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="ResetButton" type="HBoxContainer" parent="ScrollContainer/SettingsContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/SettingsContainer/ResetButton"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="ResetButton" type="Button" parent="ScrollContainer/SettingsContainer/ResetButton"]
+layout_mode = 2
+size_flags_horizontal = 6
+focus_mode = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("1_ng4l6")
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = ExtResource("8_m6mbw")
+text = "Borrar conexión 
+con Twitch y
+todo progreso"
+icon_alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="ScrollContainer/SettingsContainer/ResetButton"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("8_402ik")
+
+[node name="ConfirmationDialog" type="ConfirmationDialog" parent="."]
+unique_name_in_owner = true
+title = "Confirmar borrado..."
+initial_position = 2
+ok_button_text = "Borrar todo"
+dialog_text = "¡Esta acción no se puede desacer! ¿Deseas borrar los datos en disco de tu conexión a Twitch, la caché y todo el progreso de todos los libros?
+
+La conexión se cerrará y tendrás que volver a autenticarte."
+cancel_button_text = "Cancelar"
+
+[connection signal="hidden" from="." to="." method="_on_hidden"]
+[connection signal="toggled" from="ScrollContainer/SettingsContainer/AccessibleFontCheckbox/AccessibleFontCheckBox" to="." method="_on_check_box_toggled"]
+[connection signal="drag_ended" from="ScrollContainer/SettingsContainer/VolumeSlider/VolumeSlider" to="." method="_on_volume_slider_drag_ended"]
+[connection signal="drag_started" from="ScrollContainer/SettingsContainer/VolumeSlider/VolumeSlider" to="." method="_on_volume_slider_drag_started"]
+[connection signal="value_changed" from="ScrollContainer/SettingsContainer/VolumeSlider/VolumeSlider" to="." method="_on_volume_slider_value_changed"]
+[connection signal="pressed" from="ScrollContainer/SettingsContainer/ResetButton/ResetButton" to="." method="_on_reset_button_pressed"]
+[connection signal="confirmed" from="ConfirmationDialog" to="." method="_on_deletion_dialog_confirmed"]
