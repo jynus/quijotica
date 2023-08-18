@@ -1,5 +1,8 @@
 extends Node2D
 
+var submit_url : String = "https://jynus.com/quijotica/send.php"
+var rankings_url : String = "https://jynus.com/quijotica/"
+
 var line_template : PackedScene = preload("res://ranking_line.tscn")
 var closed_icon : Texture2D = preload("res://assets/closed_dot.png")
 var open_icon : Texture2D = preload("res://assets/open_dot.png")
@@ -74,3 +77,26 @@ func _on_page_4_button_pressed():
 
 func _on_page_5_button_pressed():
 	go_to_page(4)
+
+func _on_share_button_pressed():
+	%ShareButton.disabled = true
+	
+	var http_dict = Stats.get_global_status("dictionary")
+	http_dict["streamer"] = $"../Gift".username
+	http_dict["book"] = Config.current_book
+
+	var headers = [
+		"Content-Type: application/json",
+		"User-Agent: Quijotica/Godot4 (jynus.com)"
+	]
+	var http_body = JSON.stringify(http_dict)
+	print_debug(http_body)
+	%HTTPRequest.request(submit_url, headers, HTTPClient.METHOD_POST, http_body)
+
+func _on_http_request_request_completed(result, response_code, headers, body):
+	%ShareButton.disabled = false
+	print_debug(response_code)
+	if response_code == 200:
+		OS.shell_open(rankings_url)
+	else:
+		$FaileduploadDialog.show()

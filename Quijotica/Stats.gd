@@ -60,7 +60,7 @@ func pct_format(value: float) -> String:
 func float_format(value: float) -> String:
 	return "%.2f" % value
 
-func get_global_status() -> Array:
+func get_global_status(format: String = "screen"):
 	var total_participants : int = len(users)
 	var valid_participants : int = 0
 	var total_errors : int = 0
@@ -72,14 +72,26 @@ func get_global_status() -> Array:
 			valid_participants += 1
 	var average_time : float = total_time / word_count if word_count != 0 else 0.0
 	var total_accuracy : float = 100.0 * word_count / (word_count + total_errors) if word_count != 0 else 0.0
-	var global_stats : Array = [
-		{"user": "Progreso", "value": str(word_count) + " de " + str(total_words) + " (" + pct_format(100.0 * word_count / total_words) + ")"},
-		{"user": "Errores", "value": str(total_errors) + " (" + pct_format(total_accuracy) + " de aciertos)"},
-		{"user": "Participantes", "value": str(total_participants)},
-		{"user": "Participantes válidos", "value": str(valid_participants)},
-		{"user": "Tiempo", "value": str(round(total_time)) + "s (" + float_format(average_time) + "s de media)"},
-	]
-	return global_stats	
+	if format == "screen":
+		var global_stats : Array = [
+			{"user": "Progreso", "value": str(word_count) + " de " + str(total_words) + " (" + pct_format(100.0 * word_count / total_words) + ")"},
+			{"user": "Errores", "value": str(total_errors) + " (" + pct_format(total_accuracy) + " de aciertos)"},
+			{"user": "Participantes", "value": str(total_participants)},
+			{"user": "Participantes válidos", "value": str(valid_participants)},
+			{"user": "Tiempo", "value": str(round(total_time)) + "s (" + float_format(average_time) + "s de media)"},
+		]
+		return global_stats	
+	else:
+		return {
+			"word_count": word_count,
+			"total_errors": total_errors,
+			"total_participants": total_participants,
+			"valid_participants": valid_participants,
+			"total_time": total_time,
+			"average_time": average_time,
+			"progress_pct": 100.0 * word_count / total_words,
+			"total_accurancy_pct": total_accuracy
+		}
 
 func load_state(book: String):
 	var path : String = "user://" + book + ".progress"
