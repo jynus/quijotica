@@ -40,6 +40,17 @@ var letter_simplifications : Dictionary = {
 	"ç": "c"
 }
 
+enum ban_reason {SPELLING, TOO_LATE, TOO_SOON, DID_NOT_APOLOGIZE}
+
+var problematic_users : Dictionary = {
+	"ezoniev": false,
+	"montxaldre": false
+}
+
+const APOLOGIZE_TEXT = "@jynus perdón por los timeouts no justificados"
+
+var banned_users : Dictionary = {}
+
 signal correct_word
 signal old_word
 signal early_word
@@ -254,6 +265,8 @@ func _on_gift_joined_chatroom():
 			%User.text = "Aguardando ruines ..."
 
 	%start_menu.hide()
+	await get_tree().create_timer(2).timeout
+	chat("Hola! 👋 Soy Quijótica. Vamos por " + str(Stats.word_count) + " de " + str(Stats.total_words) + " palabras. Comandos: !quijótica !palabras .")
 	correct_word_timestamp = Time.get_unix_time_from_system()
 
 func simplify_word(word : String) -> String:
@@ -271,8 +284,39 @@ func add_mistake(user):
 		"errors": Stats.users[user]["errors"] + 1
 	}
 
+func ban_or_ignore(user: String, reason: ban_reason):
+	var timestamp : int = Time.get_unix_time_from_system()
+	match reason:
+		ban_reason.SPELLING:
+			%User.text = "✖ " + user
+			%User.label_settings.font_color = Color(1, 0.2, 0.2)
+			chat("@" + user + " ❌ aprende ortografía 😡")
+		ban_reason.TOO_SOON:
+			%User.text = "✖ " + user
+			%User.label_settings.font_color = Color(0.5, 0.5, 0.5)
+			chat("@" + user + " ❌ demasiado pronto! 🧘")
+		ban_reason.TOO_LATE:
+			%User.text = "✖ " + user
+			%User.label_settings.font_color = Color(0.5, 0.5, 0.5)
+			chat("@" + user + " ❌ demasiado tarde! 🏃")
+		ban_reason.DID_NOT_APOLOGIZE:
+			%User.text = "🫤 " + user
+			%User.label_settings.font_color = Color(0.8, 0, 0.8)
+			chat("@" + user + " ❌ no te has disculpado todavía 🙏")
+	banned_users[user.to_lower()] = timestamp + Config.ban_time
+
 func _on_gift_chat_message(sender_data, message):
 	var user : String = sender_data.tags["display-name"]
+	var timestamp : int = Time.get_unix_time_from_system()
+	if user.to_lower() in banned_users and banned_users[user.to_lower()] > timestamp:
+		return  # user is banned
+	if user.to_lower() in problematic_users and not problematic_users[user.to_lower()]:
+		if message == APOLOGIZE_TEXT:
+			problematic_users[user.to_lower()] = true
+			chat("El magnánimo @jynus te perdona, @" + user + " - vamo a jugá 😜")
+		else:
+			ban_or_ignore(user, ban_reason.DID_NOT_APOLOGIZE)
+		return
 	if message == word:
 		var current_timestamp : float = Time.get_unix_time_from_system()
 		correct_word.emit()
@@ -289,8 +333,7 @@ func _on_gift_chat_message(sender_data, message):
 		return
 	if message == next_word:
 		early_word.emit()
-		%User.text = "✖ " + user
-		%User.label_settings.font_color = Color(0.5, 0.5, 0.5)
+		ban_or_ignore(user, ban_reason.TOO_SOON)
 		add_mistake(user)
 		return
 	if message == previous_word:
@@ -298,16 +341,23 @@ func _on_gift_chat_message(sender_data, message):
 		if Time.get_unix_time_from_system() - correct_word_timestamp > 10.0:
 			return
 		old_word.emit()
-		%User.text = "✖ " + user
-		%User.label_settings.font_color = Color(0.5, 0.5, 0.5)
+		ban_or_ignore(user, ban_reason.TOO_LATE)
 		add_mistake(user)
 		return
 	if message == simplified_word or word.similarity(message) >= 0.5:
 		misspelled_word.emit()
-		%User.text = "✖ " + user
-		%User.label_settings.font_color = Color(1, 0.2, 0.2)
+		ban_or_ignore(user, ban_reason.SPELLING)
 		add_mistake(user)
-
+		return
+	if message == "!quijótica":
+		chat("Escribe la palabra que ves en pantalla. Si te equivocas no podrás escribir durante " + str(Config.ban_time) + " segundos.")
+		return
+	if message == "!palabras":
+		var words : int = 0
+		if user in Stats.users:
+			words = Stats.users[user]["words"]
+		chat("@" + user + " tienes " + str(words) + " palabras correctas.")
+		return
 func _exit():
 	print("Exiting normally...")
 	if connected:
@@ -363,7 +413,6 @@ func _on_text_loaded():
 	quijotica_loop()
 	%Gift.connect("chat_message", _on_gift_chat_message)
 
-
 func _on_reset_all_data():
 	print("Resetting all data...")
 	if connected:
@@ -380,3 +429,15 @@ func _on_reset_all_data():
 	OS.create_instance(OS.get_cmdline_args())
 	print("Now quitting.")
 	get_tree().quit()
+
+
+func expire_bans():
+	var timestamp : int = Time.get_unix_time_from_system()
+	for user in banned_users.keys():
+		if banned_users[user] < timestamp:
+			banned_users.erase(user)
+			chat("@" + user + " hola de vuelta 👋")
+
+func chat(msg: String):
+	if Config.chat_enabled:
+		%Gift.chat(msg)

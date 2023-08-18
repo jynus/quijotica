@@ -365,7 +365,7 @@ anchor_right = 1.0
 anchor_bottom = 0.5
 offset_left = -5.0
 offset_top = 216.0
-offset_right = 1595.0
+offset_right = 1622.0
 offset_bottom = 750.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -478,7 +478,6 @@ visible = false
 [node name="Gift" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("4_semax")
-scopes = Array[String](["chat:edit", "chat:read", "moderator:read:followers"])
 disk_cache = true
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
@@ -491,6 +490,9 @@ libraries = {
 "": SubResource("AnimationLibrary_ayt2g")
 }
 
+[node name="UnbanUsersTimer" type="Timer" parent="."]
+autostart = true
+
 [connection signal="text_loaded" from="." to="." method="_on_text_loaded"]
 [connection signal="show_credits" from="Overlay" to="." method="_on_overlay_show_credits"]
 [connection signal="show_rules" from="Overlay" to="." method="_on_overlay_show_rules"]
@@ -501,3 +503,4 @@ libraries = {
 [connection signal="reset_all_data" from="Settings" to="." method="_on_reset_all_data"]
 [connection signal="connect" from="start_menu" to="." method="_on_start_menu_connect"]
 [connection signal="joined_chatroom" from="Gift" to="." method="_on_gift_joined_chatroom"]
+[connection signal="timeout" from="UnbanUsersTimer" to="." method="expire_bans"]

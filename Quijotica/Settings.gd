@@ -22,7 +22,7 @@ func update_settings():
 		var option_name : String = " " + Config.book_list[book].name
 		cb.setup(book, option_name, book == Config.current_book)
 		%BookOptions.add_child(cb)
-	if len(Config.book_list) > 0:
+	if len(Config.book_list) > 0 and not cb.get_button_group().is_connected("pressed", book_pressed):
 		cb.get_button_group().connect("pressed", book_pressed)
 	%VolumeSlider.value = Config.volume
 	%AccessibleFontCheckBox.button_pressed = Config.accessible_font
@@ -63,7 +63,6 @@ func _on_reset_button_pressed():
 
 func _on_deletion_dialog_confirmed():
 	reset_all_data.emit()
-
 
 func _on_hidden():
 	Config.save_options()

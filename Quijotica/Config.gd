@@ -3,6 +3,8 @@ extends Node
 var current_book : String = "don_quixote"
 var accessible_font : bool = false
 var volume : float = 50
+var chat_enabled : bool = true
+var ban_time : int = 30
 
 var path : String = "user://quijotica.config"
 
@@ -19,15 +21,15 @@ var book_list : Dictionary = {
 		"name": "La Biblia",
 		"image":"res://assets/fsm.png",
 		"music": "res://assets/Victory.mp3",
-		"background": "res://assets/Don_Quixote_fighting_windmills.png",
-		"title": "Quijótica",
+		"background": "res://assets/Segur_-_Bible_d_une_grand_mere_part_1_p95.png",
+		"title": "Bibliótica",
 		"conectar": "Rezar"
 	},
 	"frankenstein_ingles": {
 		"name": "Frankenstein",
 		"image":"res://assets/Frankenstein.png",
 		"music": "res://assets/Victory.mp3",
-		"background": "res://assets/Don_Quixote_fighting_windmills.png",
+		"background": "res://assets/Frankenstein's_monster_(Boris_Karloff).png",
 		"title": "Frankenstérica",
 		"conectar": "Dar vida"
 	},
@@ -43,7 +45,7 @@ var book_list : Dictionary = {
 		"name": "Numerica",
 		"image":"res://assets/numerica.png",
 		"music": "res://assets/Victory.mp3",
-		"background": "res://assets/Don_Quixote_fighting_windmills.png",
+		"background": "res://assets/numerica_front.png",
 		"title": "Numérica",
 		"conectar": "ConnectTo Twitch"
 	},
@@ -51,7 +53,7 @@ var book_list : Dictionary = {
 		"name": "Pi",
 		"image":"res://assets/pi.png",
 		"music": "res://assets/Victory.mp3",
-		"background": "res://assets/Don_Quixote_fighting_windmills.png",
+		"background": "res://assets/Giessen-mathematikum-2015-304.png",
 		"title": "Piérica",
 		"conectar": "Calcular"
 	}
@@ -76,6 +78,8 @@ func load_options():
 	current_book = options_dict.current_book if "current_book" in options_dict else "don_quixote"
 	accessible_font = options_dict.accessible_font if "accessible_font" in options_dict else false
 	volume = options_dict.volume if "volume" in options_dict else 50
+	chat_enabled = options_dict.chat_enabled if "chat_enabled" in options_dict else true
+	ban_time = options_dict.ban_time if "ban_time" in options_dict else 30
 
 	print("Loaded game options from file.")
 
@@ -83,7 +87,9 @@ func save_options():
 	var save_dict = {
 		"current_book": current_book,
 		"accessible_font": accessible_font,
-		"volume": volume
+		"volume": volume,
+		"chat_enabled": chat_enabled,
+		"ban_time": ban_time
 	}
 	var options_file = FileAccess.open(path, FileAccess.WRITE)
 	var json_string = JSON.stringify(save_dict)

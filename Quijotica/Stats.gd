@@ -112,4 +112,4 @@ func save_state(book: String):
 	var json_string = JSON.stringify(save_dict)
 	save_game.store_line(json_string)
 	save_game.close()
-	print("Saved " + book + "progress to disk.")
+	print("Saved " + book + " progress to disk.")
