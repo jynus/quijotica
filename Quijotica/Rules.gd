@@ -1,18 +1,12 @@
-extends Node2D
+extends Control
 
-signal connect
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	visible = true
+	pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
-
-
-func _on_button_pressed():
-	%Button.disabled = true
-	%Button.text = "conectando..."
-	connect.emit()
+	if Input.is_action_pressed("ui_cancel"):
+		hide()

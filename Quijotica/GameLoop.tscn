@@ -493,6 +493,14 @@ libraries = {
 [node name="UnbanUsersTimer" type="Timer" parent="."]
 autostart = true
 
+[node name="ConfirmationDialog" type="ConfirmationDialog" parent="."]
+unique_name_in_owner = true
+title = "Confirmar salir..."
+initial_position = 2
+ok_button_text = "Salir"
+dialog_text = "¿Cerrar Quijótica? Se guardará el progreso automáticamente."
+cancel_button_text = "Cancelar"
+
 [connection signal="text_loaded" from="." to="." method="_on_text_loaded"]
 [connection signal="show_credits" from="Overlay" to="." method="_on_overlay_show_credits"]
 [connection signal="show_rules" from="Overlay" to="." method="_on_overlay_show_rules"]
@@ -504,3 +512,4 @@ autostart = true
 [connection signal="connect" from="start_menu" to="." method="_on_start_menu_connect"]
 [connection signal="joined_chatroom" from="Gift" to="." method="_on_gift_joined_chatroom"]
 [connection signal="timeout" from="UnbanUsersTimer" to="." method="expire_bans"]
+[connection signal="confirmed" from="ConfirmationDialog" to="." method="_on_exit_dialog_confirmed"]

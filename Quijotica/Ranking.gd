@@ -25,7 +25,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	if Input.is_action_pressed("ui_cancel"):
+		hide()
 
 func print_user_ranking(user : Dictionary, location: Node):
 	var line = line_template.instantiate()

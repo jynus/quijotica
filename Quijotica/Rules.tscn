@@ -1,5 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://ufuxfa7b1hb7"]
+[gd_scene load_steps=7 format=3 uid="uid://ufuxfa7b1hb7"]
 
+[ext_resource type="Script" path="res://Rules.gd" id="1_06250"]
 [ext_resource type="FontFile" uid="uid://c1xq7d3mhuvt5" path="res://assets/Guttenbg.ttf" id="2_c2p8d"]
 [ext_resource type="FontFile" uid="uid://cdfafwjg3xnk2" path="res://assets/Don_Quixote.ttf" id="3_3x2p5"]
 [ext_resource type="PackedScene" uid="uid://dyj7w4bn7bmcb" path="res://BackButton.tscn" id="4_1mhal"]
@@ -14,12 +15,19 @@ font = ExtResource("3_3x2p5")
 font_size = 65
 font_color = Color(0, 0, 0, 1)
 
-[node name="Rules" type="Node2D"]
+[node name="Rules" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_06250")
 
 [node name="Background" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(800, 800)
+layout_mode = 0
 offset_right = 800.0
 offset_bottom = 800.0
+mouse_filter = 2
 color = Color(0.968627, 0.952941, 0.968627, 1)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Background"]
@@ -29,15 +37,25 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
-[node name="RulesTitle" type="Label" parent="Background/VBoxContainer"]
-unique_name_in_owner = true
+[node name="HBoxContainer" type="HBoxContainer" parent="Background/VBoxContainer"]
 layout_mode = 2
+
+[node name="RulesTitle" type="Label" parent="Background/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+size_flags_horizontal = 3
 text = "Leyes de la caballería"
 label_settings = SubResource("LabelSettings_d87yp")
-horizontal_alignment = 1
+horizontal_alignment = 2
 vertical_alignment = 1
 autowrap_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Background/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="Background/VBoxContainer"]
 custom_minimum_size = Vector2(0, 20)
@@ -45,7 +63,7 @@ layout_mode = 2
 
 [node name="ScrollCredits" type="ScrollContainer" parent="Background/VBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(800, 600)
+custom_minimum_size = Vector2(800, 610)
 layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Background/VBoxContainer/ScrollCredits"]
@@ -78,7 +96,8 @@ custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 
 [node name="BackButton" parent="." instance=ExtResource("4_1mhal")]
-offset_left = 21.0
-offset_top = 37.0
-offset_right = 135.0
-offset_bottom = 113.0
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+offset_right = 100.0
+offset_bottom = 150.0

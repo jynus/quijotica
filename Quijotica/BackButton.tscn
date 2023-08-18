@@ -1,14 +1,63 @@
-[gd_scene load_steps=2 format=3 uid="uid://dyj7w4bn7bmcb"]
+[gd_scene load_steps=7 format=3 uid="uid://dyj7w4bn7bmcb"]
 
+[ext_resource type="Texture2D" uid="uid://bd1joogipa5d4" path="res://assets/home_button.png" id="1_6c2k5"]
 [ext_resource type="Script" path="res://BackButton.gd" id="1_mkifc"]
 
-[node name="BackButton" type="Button"]
-offset_left = -58.0
-offset_top = -39.0
-offset_right = 56.0
-offset_bottom = 37.0
+[sub_resource type="Gradient" id="Gradient_qyqqp"]
+offsets = PackedFloat32Array(0.292079, 0.663366)
+colors = PackedColorArray(0.968627, 0.952941, 0.968627, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_jjou5"]
+gradient = SubResource("Gradient_qyqqp")
+width = 200
+height = 200
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_72ksh"]
+texture = ExtResource("1_6c2k5")
+modulate_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_e8rld"]
+texture = ExtResource("1_6c2k5")
+modulate_color = Color(0.176471, 0.176471, 0.176471, 1)
+
+[node name="Node" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -14.0
+offset_top = -12.0
+offset_right = -14.0
+offset_bottom = -12.0
+
+[node name="ColorRect" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.505
+anchor_top = 0.5
+anchor_right = 0.505
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = -12.0
+offset_right = 204.0
+offset_bottom = 196.0
+pivot_offset = Vector2(105, 99)
+texture = SubResource("GradientTexture2D_jjou5")
+
+[node name="BackButton" type="Button" parent="."]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 201.0
+offset_bottom = 201.0
 size_flags_horizontal = 4
-text = "Atrás"
+focus_mode = 0
+mouse_filter = 1
+theme_override_styles/normal = SubResource("StyleBoxTexture_72ksh")
+theme_override_styles/hover = SubResource("StyleBoxTexture_e8rld")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_72ksh")
 script = ExtResource("1_mkifc")
 
-[connection signal="pressed" from="." to="." method="_on_pressed"]
+[connection signal="pressed" from="BackButton" to="BackButton" method="_on_pressed"]

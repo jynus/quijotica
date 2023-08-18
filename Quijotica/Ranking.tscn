@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://du6qo5hn23re2"]
+[gd_scene load_steps=11 format=3 uid="uid://du6qo5hn23re2"]
 
 [ext_resource type="Script" path="res://Ranking.gd" id="1_etsof"]
 [ext_resource type="FontFile" uid="uid://c1xq7d3mhuvt5" path="res://assets/Guttenbg.ttf" id="2_ig3vd"]
@@ -8,12 +8,24 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_d87yp"]
 font = ExtResource("2_ig3vd")
-font_size = 100
+font_size = 75
 font_color = Color(0.0235294, 0.0235294, 0.0235294, 1)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fqrnr"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f8u0d"]
+texture = ExtResource("6_gmnho")
+modulate_color = Color(0, 0, 0, 1)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_iqrpb"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_15f4q"]
+texture = ExtResource("6_gmnho")
+modulate_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ajpr1"]
+texture = ExtResource("6_gmnho")
+modulate_color = Color(0.113725, 0.113725, 0.113725, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pjvh8"]
+texture = ExtResource("5_yajqi")
+modulate_color = Color(0, 0, 0, 1)
 
 [node name="Ranking" type="Node2D"]
 script = ExtResource("1_etsof")
@@ -33,43 +45,43 @@ columns = 5
 
 [node name="WordsTitle" type="Label" parent="RankingWindows"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(800, 0)
+custom_minimum_size = Vector2(800, 150)
 layout_mode = 2
-text = "Clasificación (palabras)"
+text = "    Clasificación (palabras)"
 label_settings = SubResource("LabelSettings_d87yp")
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="FasterTitle" type="Label" parent="RankingWindows"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(800, 0)
+custom_minimum_size = Vector2(800, 150)
 layout_mode = 2
-text = "Clasificación (velocidad)"
+text = "    Clasificación (velocidad)"
 label_settings = SubResource("LabelSettings_d87yp")
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="LeastErrorsTitle" type="Label" parent="RankingWindows"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(800, 0)
+custom_minimum_size = Vector2(800, 150)
 layout_mode = 2
-text = "Clasificación (aciertos)"
+text = "    Clasificación (aciertos)"
 label_settings = SubResource("LabelSettings_d87yp")
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="MostErrorsTitle" type="Label" parent="RankingWindows"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(800, 0)
+custom_minimum_size = Vector2(800, 150)
 layout_mode = 2
-text = "Clasificación (errores)"
+text = "    Clasificación (errores)"
 label_settings = SubResource("LabelSettings_d87yp")
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="GlobalTitle" type="Label" parent="RankingWindows"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(800, 0)
+custom_minimum_size = Vector2(800, 150)
 layout_mode = 2
 text = "Clasificación global"
 label_settings = SubResource("LabelSettings_d87yp")
@@ -77,36 +89,36 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="RankingWindows"]
-custom_minimum_size = Vector2(0, 25)
+custom_minimum_size = Vector2(0, 5)
 layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="MarginContainer2" type="MarginContainer" parent="RankingWindows"]
-custom_minimum_size = Vector2(0, 25)
+custom_minimum_size = Vector2(0, 5)
 layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="MarginContainer3" type="MarginContainer" parent="RankingWindows"]
-custom_minimum_size = Vector2(0, 25)
+custom_minimum_size = Vector2(0, 5)
 layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="MarginContainer4" type="MarginContainer" parent="RankingWindows"]
-custom_minimum_size = Vector2(0, 25)
+custom_minimum_size = Vector2(0, 5)
 layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="MarginContainer5" type="MarginContainer" parent="RankingWindows"]
-custom_minimum_size = Vector2(0, 25)
+custom_minimum_size = Vector2(0, 5)
 layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="TopWords" type="VBoxContainer" parent="RankingWindows"]
-custom_minimum_size = Vector2(800, 0)
+custom_minimum_size = Vector2(800, 565)
 layout_mode = 2
 
 [node name="ScrollContainer" type="ScrollContainer" parent="RankingWindows/TopWords"]
-custom_minimum_size = Vector2(780, 570)
+custom_minimum_size = Vector2(780, 535)
 layout_mode = 2
 size_flags_horizontal = 0
 
@@ -118,11 +130,11 @@ size_flags_horizontal = 0
 size_flags_vertical = 0
 
 [node name="Faster" type="VBoxContainer" parent="RankingWindows"]
-custom_minimum_size = Vector2(800, 0)
+custom_minimum_size = Vector2(800, 565)
 layout_mode = 2
 
 [node name="ScrollContainer" type="ScrollContainer" parent="RankingWindows/Faster"]
-custom_minimum_size = Vector2(780, 570)
+custom_minimum_size = Vector2(780, 535)
 layout_mode = 2
 size_flags_horizontal = 0
 
@@ -132,11 +144,11 @@ custom_minimum_size = Vector2(780, 0)
 layout_mode = 2
 
 [node name="LeastErrors" type="VBoxContainer" parent="RankingWindows"]
-custom_minimum_size = Vector2(800, 0)
+custom_minimum_size = Vector2(800, 565)
 layout_mode = 2
 
 [node name="ScrollContainer" type="ScrollContainer" parent="RankingWindows/LeastErrors"]
-custom_minimum_size = Vector2(780, 570)
+custom_minimum_size = Vector2(780, 535)
 layout_mode = 2
 size_flags_horizontal = 0
 
@@ -146,11 +158,11 @@ custom_minimum_size = Vector2(780, 0)
 layout_mode = 2
 
 [node name="MostErrors" type="VBoxContainer" parent="RankingWindows"]
-custom_minimum_size = Vector2(800, 0)
+custom_minimum_size = Vector2(800, 565)
 layout_mode = 2
 
 [node name="ScrollContainer" type="ScrollContainer" parent="RankingWindows/MostErrors"]
-custom_minimum_size = Vector2(780, 570)
+custom_minimum_size = Vector2(780, 535)
 layout_mode = 2
 size_flags_horizontal = 0
 
@@ -160,11 +172,11 @@ custom_minimum_size = Vector2(780, 0)
 layout_mode = 2
 
 [node name="GlobalRanking" type="VBoxContainer" parent="RankingWindows"]
-custom_minimum_size = Vector2(800, 0)
+custom_minimum_size = Vector2(800, 565)
 layout_mode = 2
 
 [node name="ScrollContainer" type="ScrollContainer" parent="RankingWindows/GlobalRanking"]
-custom_minimum_size = Vector2(780, 570)
+custom_minimum_size = Vector2(780, 535)
 layout_mode = 2
 size_flags_horizontal = 0
 
@@ -193,46 +205,68 @@ size_flags_horizontal = 3
 
 [node name="Page1Button" type="Button" parent="NavigationButtons"]
 unique_name_in_owner = true
+self_modulate = Color(0, 0, 0, 1)
+custom_minimum_size = Vector2(87, 74)
 layout_mode = 2
+focus_mode = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_styles/normal = SubResource("StyleBoxEmpty_fqrnr")
-icon = ExtResource("5_yajqi")
+theme_override_styles/normal = SubResource("StyleBoxTexture_f8u0d")
+theme_override_styles/hover = SubResource("StyleBoxTexture_15f4q")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_ajpr1")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_pjvh8")
+disabled = true
 icon_alignment = 1
 
 [node name="Page2Button" type="Button" parent="NavigationButtons"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(50, 0)
+self_modulate = Color(0, 0, 0, 1)
+custom_minimum_size = Vector2(87, 74)
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_styles/normal = SubResource("StyleBoxEmpty_iqrpb")
-icon = ExtResource("6_gmnho")
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_f8u0d")
+theme_override_styles/hover = SubResource("StyleBoxTexture_15f4q")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_ajpr1")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_pjvh8")
 icon_alignment = 1
 
 [node name="Page3Button" type="Button" parent="NavigationButtons"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(50, 0)
+self_modulate = Color(0, 0, 0, 1)
+custom_minimum_size = Vector2(87, 74)
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_styles/normal = SubResource("StyleBoxEmpty_iqrpb")
-icon = ExtResource("6_gmnho")
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_f8u0d")
+theme_override_styles/hover = SubResource("StyleBoxTexture_15f4q")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_ajpr1")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_pjvh8")
 icon_alignment = 1
 
 [node name="Page4Button" type="Button" parent="NavigationButtons"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(50, 0)
+self_modulate = Color(0, 0, 0, 1)
+custom_minimum_size = Vector2(87, 74)
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_styles/normal = SubResource("StyleBoxEmpty_iqrpb")
-icon = ExtResource("6_gmnho")
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_f8u0d")
+theme_override_styles/hover = SubResource("StyleBoxTexture_15f4q")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_ajpr1")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_pjvh8")
 icon_alignment = 1
 
 [node name="Page5Button" type="Button" parent="NavigationButtons"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(50, 0)
+self_modulate = Color(0, 0, 0, 1)
+custom_minimum_size = Vector2(87, 74)
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_styles/normal = SubResource("StyleBoxEmpty_iqrpb")
-icon = ExtResource("6_gmnho")
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_f8u0d")
+theme_override_styles/hover = SubResource("StyleBoxTexture_15f4q")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_ajpr1")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_pjvh8")
 icon_alignment = 1
 
 [node name="MarginContainer2" type="MarginContainer" parent="NavigationButtons"]
@@ -241,10 +275,10 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="BackButton" parent="." instance=ExtResource("4_p6h4m")]
-offset_left = 36.0
-offset_top = 61.0
-offset_right = 150.0
-offset_bottom = 137.0
+offset_left = -16.0
+offset_top = -11.0
+offset_right = -16.0
+offset_bottom = -11.0
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 [connection signal="pressed" from="NavigationButtons/Page1Button" to="." method="_on_page_1_button_pressed"]

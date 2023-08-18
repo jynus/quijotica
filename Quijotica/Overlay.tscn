@@ -1,10 +1,59 @@
-[gd_scene load_steps=2 format=3 uid="uid://y51wof4qdj5u"]
+[gd_scene load_steps=16 format=3 uid="uid://y51wof4qdj5u"]
 
 [ext_resource type="Script" path="res://Overlay.gd" id="1_3xs60"]
+[ext_resource type="Texture2D" uid="uid://d24ib5aalq7un" path="res://assets/settings_button.png" id="2_a1h1g"]
+[ext_resource type="Texture2D" uid="uid://dqforaxv5i0wy" path="res://assets/ranking_button.png" id="2_h2ygk"]
+[ext_resource type="Texture2D" uid="uid://c25sasf2ji11k" path="res://assets/about_button.png" id="2_sboq2"]
+[ext_resource type="Texture2D" uid="uid://b4f5crefjjc1s" path="res://assets/rules_button.png" id="3_jmluj"]
+
+[sub_resource type="Gradient" id="Gradient_idk4o"]
+offsets = PackedFloat32Array(0.292079, 0.663366)
+colors = PackedColorArray(0.968627, 0.952941, 0.968627, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_5thyb"]
+gradient = SubResource("Gradient_idk4o")
+width = 200
+height = 200
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vyn3i"]
+texture = ExtResource("2_h2ygk")
+modulate_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2g6tx"]
+texture = ExtResource("2_h2ygk")
+modulate_color = Color(0.176471, 0.176471, 0.176471, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_h81qg"]
+texture = ExtResource("2_a1h1g")
+modulate_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6kdjn"]
+texture = ExtResource("2_a1h1g")
+modulate_color = Color(0.176471, 0.176471, 0.176471, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jh6ky"]
+texture = ExtResource("3_jmluj")
+modulate_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t64qh"]
+texture = ExtResource("3_jmluj")
+modulate_color = Color(0.176471, 0.176471, 0.176471, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_garh2"]
+texture = ExtResource("2_sboq2")
+modulate_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_maqdt"]
+texture = ExtResource("2_sboq2")
+modulate_color = Color(0.176471, 0.176471, 0.176471, 1)
 
 [node name="Overlay" type="Control"]
 layout_mode = 3
 anchors_preset = 0
+offset_top = -2.0
+offset_bottom = -2.0
 script = ExtResource("1_3xs60")
 
 [node name="Container" type="ColorRect" parent="."]
@@ -14,45 +63,121 @@ offset_bottom = 800.0
 mouse_filter = 1
 color = Color(1, 1, 1, 0)
 
+[node name="Container2" type="ColorRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 800.0
+offset_bottom = 800.0
+mouse_filter = 1
+color = Color(0.968627, 0.952941, 0.968627, 0.52549)
+
+[node name="ColorRect" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.505
+anchor_top = 0.5
+anchor_right = 0.505
+anchor_bottom = 0.5
+offset_left = -1.0
+offset_top = 590.0
+offset_right = 228.0
+offset_bottom = 798.0
+pivot_offset = Vector2(105, 99)
+texture = SubResource("GradientTexture2D_5thyb")
+
+[node name="ColorRect3" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.505
+anchor_top = 0.5
+anchor_right = 0.505
+anchor_bottom = 0.5
+offset_left = 578.0
+offset_top = -6.0
+offset_right = 807.0
+offset_bottom = 202.0
+pivot_offset = Vector2(105, 99)
+texture = SubResource("GradientTexture2D_5thyb")
+
+[node name="ColorRect2" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.505
+anchor_top = 0.5
+anchor_right = 0.505
+anchor_bottom = 0.5
+offset_left = 1.0
+offset_top = 4.0
+offset_right = 230.0
+offset_bottom = 212.0
+pivot_offset = Vector2(105, 99)
+texture = SubResource("GradientTexture2D_5thyb")
+
+[node name="ColorRect4" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.505
+anchor_top = 0.5
+anchor_right = 0.505
+anchor_bottom = 0.5
+offset_left = 572.0
+offset_top = 590.0
+offset_right = 801.0
+offset_bottom = 798.0
+pivot_offset = Vector2(105, 99)
+texture = SubResource("GradientTexture2D_5thyb")
+
 [node name="StatsButton" type="Button" parent="."]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 30.0
-offset_top = 30.0
-offset_right = 180.0
-offset_bottom = 180.0
+offset_right = 200.0
+offset_bottom = 200.0
+focus_mode = 0
 mouse_filter = 1
-text = "stats"
+theme_override_styles/normal = SubResource("StyleBoxTexture_vyn3i")
+theme_override_styles/hover = SubResource("StyleBoxTexture_2g6tx")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_vyn3i")
 
 [node name="SettingsButton" type="Button" parent="."]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 620.0
-offset_top = 30.0
-offset_right = 770.0
-offset_bottom = 180.0
+offset_left = 600.0
+offset_right = 800.0
+offset_bottom = 200.0
+focus_mode = 0
 mouse_filter = 1
-text = "settings"
+theme_override_styles/normal = SubResource("StyleBoxTexture_h81qg")
+theme_override_styles/hover = SubResource("StyleBoxTexture_6kdjn")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_h81qg")
 
 [node name="RulesButton" type="Button" parent="."]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 30.0
-offset_top = 620.0
-offset_right = 180.0
-offset_bottom = 770.0
+offset_top = 600.0
+offset_right = 200.0
+offset_bottom = 800.0
+focus_mode = 0
 mouse_filter = 1
-text = "rules"
+theme_override_styles/normal = SubResource("StyleBoxTexture_jh6ky")
+theme_override_styles/hover = SubResource("StyleBoxTexture_t64qh")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_jh6ky")
 
 [node name="CreditsButton" type="Button" parent="."]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 620.0
-offset_top = 620.0
-offset_right = 770.0
-offset_bottom = 770.0
+offset_left = 599.0
+offset_top = 594.0
+offset_right = 799.0
+offset_bottom = 794.0
+focus_mode = 0
 mouse_filter = 1
-text = "credits"
+theme_override_styles/normal = SubResource("StyleBoxTexture_garh2")
+theme_override_styles/hover = SubResource("StyleBoxTexture_maqdt")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_garh2")
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

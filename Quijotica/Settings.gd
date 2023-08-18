@@ -48,8 +48,8 @@ func book_pressed(button: BaseButton):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
-
+	if Input.is_action_pressed("ui_cancel"):
+		hide()
 
 func _on_check_box_toggled(button_pressed: bool):
 	if button_pressed:

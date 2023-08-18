@@ -14,12 +14,22 @@ func _process(delta):
 	pass
 
 func _on_mouse_entered():
+	%Container2.show()
+	%ColorRect.show()
+	%ColorRect2.show()
+	%ColorRect3.show()
+	%ColorRect4.show()
 	%StatsButton.show()
 	%SettingsButton.show()
 	%RulesButton.show()
 	%CreditsButton.show()
 
 func _on_mouse_exited():
+	%Container2.hide()
+	%ColorRect.hide()
+	%ColorRect2.hide()
+	%ColorRect3.hide()
+	%ColorRect4.hide()
 	%StatsButton.hide()
 	%SettingsButton.hide()
 	%RulesButton.hide()

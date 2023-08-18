@@ -8,6 +8,10 @@ var line_template : PackedScene = preload("res://ranking_line.tscn")
 func _ready():
 	refresh_data()
 
+func _process(delta):
+	if Input.is_action_pressed("ui_cancel"):
+		hide()
+
 func refresh_data():
 	scroll.get_v_scroll_bar().value = 0
 	return update_users()

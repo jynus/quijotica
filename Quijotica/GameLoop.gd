@@ -166,6 +166,10 @@ func _ready():
 	Stats.load_state(Config.current_book)
 	load_text()
 
+func _process(delta):
+	if Input.is_action_pressed("ui_cancel"):
+		%ConfirmationDialog.show()
+
 func redraw_window():
 	var font = "res://assets/coolvetica rg.otf" if Config.accessible_font else "res://assets/Don_Quixote.ttf"
 	%PreviousWord.label_settings.font = load(font)
@@ -358,6 +362,7 @@ func _on_gift_chat_message(sender_data, message):
 			words = Stats.users[user]["words"]
 		chat("@" + user + " tienes " + str(words) + " palabras correctas.")
 		return
+
 func _exit():
 	print("Exiting normally...")
 	if connected:
@@ -441,3 +446,6 @@ func expire_bans():
 func chat(msg: String):
 	if Config.chat_enabled:
 		%Gift.chat(msg)
+
+func _on_exit_dialog_confirmed():
+	_exit()
