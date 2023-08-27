@@ -156,7 +156,8 @@ func quijotica_loop():
 			Stats.save_state(Config.current_book)
 			if Config.automatic_upload:
 				%Ranking.upload_data()
-			await %AnimationPlayer.animation_finished
+			if large_window:
+				await %AnimationPlayer.animation_finished
 		if large_window:
 			animation_player.play("correct_word_2")
 			await animation_player.animation_finished
