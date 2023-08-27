@@ -21,6 +21,8 @@ var connected : bool = false
 @onready var gift = %Gift
 
 const SMALL_WINDOW_SIZE : int = 400
+const CELEBRATION_EACH : int = 100
+
 var letter_simplifications : Dictionary = {
 	"á": "a",
 	"à": "a",
@@ -128,6 +130,10 @@ func load_text():
 	print("Total words: ", word_counter)
 	text_file.close()
 	%Credits/VictoryMusic.stream = load(Config.book_list[Config.current_book].music)
+	if Config.current_book == "manifiesto_comunista":
+		%CPUParticles2D.texture = load("res://assets/celebration1.png")
+	else:
+		%CPUParticles2D.texture = load("res://assets/celebration2.png")
 	text_loaded.emit()
 
 # Called when the node enters the scene tree for the first time.
@@ -141,10 +147,16 @@ func quijotica_loop():
 		await correct_word
 		Stats.word_count += 1
 
-		if Stats.word_count % 100 == 0:
+		if Stats.word_count > 0 and Stats.word_count % CELEBRATION_EACH == 0:
+			if large_window:
+				if Config.current_book == "manifiesto_comunista":
+					%AnimationPlayer.play("celebration_2")
+				else:
+					%AnimationPlayer.play("celebration")
 			Stats.save_state(Config.current_book)
 			if Config.automatic_upload:
 				%Ranking.upload_data()
+			await %AnimationPlayer.animation_finished
 		if large_window:
 			animation_player.play("correct_word_2")
 			await animation_player.animation_finished

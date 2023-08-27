@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://sb21nf2wf7if"]
+[gd_scene load_steps=33 format=3 uid="uid://sb21nf2wf7if"]
 
 [ext_resource type="Script" path="res://GameLoop.gd" id="1_g4qhq"]
 [ext_resource type="FontFile" uid="uid://cdfafwjg3xnk2" path="res://assets/Don_Quixote.ttf" id="2_exqfm"]
@@ -13,6 +13,9 @@
 [ext_resource type="PackedScene" uid="uid://bcd613socawx4" path="res://Settings.tscn" id="7_kb56c"]
 [ext_resource type="AudioStream" uid="uid://bj8kaabmej0xu" path="res://assets/pencil-29272.mp3" id="8_uo8pk"]
 [ext_resource type="PackedScene" uid="uid://c5pvbt84a656d" path="res://Credits.tscn" id="8_wgrd6"]
+[ext_resource type="AudioStream" uid="uid://dvh7btsjwicbs" path="res://assets/Victory.mp3" id="14_xpr7w"]
+[ext_resource type="Texture2D" uid="uid://tjby5gapdm3v" path="res://assets/celebration2.png" id="15_81qch"]
+[ext_resource type="AudioStream" uid="uid://dhbjnreebt10e" path="res://assets/USSR_Anthem_-_1977.ogg" id="15_ydb8f"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_cufs0"]
 font = ExtResource("3_chick")
@@ -127,6 +130,30 @@ tracks/5/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("CPUParticles2D:emitting")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("CelebrationMusic:volume_db")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
 }
 
 [sub_resource type="Animation" id="Animation_jbt4q"]
@@ -286,13 +313,130 @@ tracks/3/keys = {
 "values": [Color(0, 0, 0, 1), Color(0.627451, 0.627451, 0.627451, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_4jw6g"]
+resource_name = "celebration"
+length = 6.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimationPlayer:root_node")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 1,
+"values": []
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CPUParticles2D:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 5.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/2/type = "audio"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CelebrationMusic")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("14_xpr7w")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/2/use_blend = true
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CelebrationMusic:volume_db")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.5, 5.5, 6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [-80.0, -10.0, 1.0, -80.0]
+}
+
+[sub_resource type="Animation" id="Animation_a7vv6"]
+resource_name = "celebration_2"
+length = 6.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimationPlayer:root_node")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 1,
+"values": []
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CPUParticles2D:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 5.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/2/type = "audio"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CelebrationMusic")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("15_ydb8f")
+}],
+"times": PackedFloat32Array(-4.2)
+}
+tracks/2/use_blend = true
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CelebrationMusic:volume_db")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.5, 5.5, 6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [-80.0, -10.0, 1.0, -80.0]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ayt2g"]
 _data = {
 "RESET": SubResource("Animation_2vj1h"),
+"celebration": SubResource("Animation_4jw6g"),
+"celebration_2": SubResource("Animation_a7vv6"),
 "correct_word": SubResource("Animation_jbt4q"),
 "correct_word_2": SubResource("Animation_2viq3"),
 "next_word": SubResource("Animation_ras3e")
 }
+
+[sub_resource type="Curve" id="Curve_peaa7"]
+min_value = -1.0
+_data = [Vector2(0.0712074, 0.136842), 0.0, 0.0, 0, 0, Vector2(0.975232, 0.494737), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [node name="Game_loop" type="Node2D"]
 script = ExtResource("1_g4qhq")
@@ -340,7 +484,7 @@ unique_name_in_owner = true
 layout_mode = 0
 offset_right = 800.0
 offset_bottom = 176.0
-text = "372 802 de 372 802"
+text = "372 799 de 372 799"
 label_settings = SubResource("LabelSettings_cufs0")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -351,7 +495,7 @@ layout_mode = 0
 offset_top = 544.0
 offset_right = 800.0
 offset_bottom = 792.0
-text = "Esperando que cargue Unity..."
+text = "Jynus"
 label_settings = SubResource("LabelSettings_f3vrk")
 horizontal_alignment = 1
 vertical_alignment = 2
@@ -473,6 +617,7 @@ visible = false
 
 [node name="start_menu" parent="." instance=ExtResource("5_igfx2")]
 unique_name_in_owner = true
+visible = false
 
 [node name="Gift" type="Node" parent="."]
 unique_name_in_owner = true
@@ -485,6 +630,7 @@ disk_cache = true
 stream = ExtResource("8_uo8pk")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
 libraries = {
 "": SubResource("AnimationLibrary_ayt2g")
 }
@@ -499,6 +645,27 @@ initial_position = 2
 ok_button_text = "Salir"
 dialog_text = "¿Cerrar Quijótica? Se guardará el progreso automáticamente."
 cancel_button_text = "Cancelar"
+
+[node name="CelebrationMusic" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(398, 92)
+emitting = false
+amount = 100
+lifetime = 1.2
+preprocess = 6.0
+randomness = 0.18
+lifetime_randomness = 0.24
+texture = ExtResource("15_81qch")
+emission_shape = 3
+emission_rect_extents = Vector2(400, 50)
+angle_max = 720.0
+scale_amount_max = 2.0
+hue_variation_min = 1.0
+hue_variation_max = 1.0
+hue_variation_curve = SubResource("Curve_peaa7")
 
 [connection signal="text_loaded" from="." to="." method="_on_text_loaded"]
 [connection signal="show_credits" from="Overlay" to="." method="_on_overlay_show_credits"]
