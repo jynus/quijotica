@@ -59,6 +59,14 @@ var book_list : Dictionary = {
 		"background": "res://assets/Giessen-mathematikum-2015-304.png",
 		"title": "Piérica",
 		"conectar": "Calcular"
+	},
+	"buttonica": {
+		"name": "Buttonica",
+		"image": "res://assets/button_back.png",
+		"music": "res://assets/Victory.mp3",
+		"background": "res://assets/the_button.png",
+		"title": "The Butt-onica",
+		"conectar": "Apretar"
 	}
 }
 
