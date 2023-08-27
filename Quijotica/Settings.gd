@@ -42,6 +42,12 @@ func update_settings():
 		%AlwaysOnTopCheckBox.text = " Desactivada"
 	%AlwaysOnTopCheckBox.button_pressed = Config.always_on_top
 	DisplayServer.window_set_flag(DisplayServer.WindowFlags.WINDOW_FLAG_ALWAYS_ON_TOP, Config.always_on_top)
+	if Config.automatic_upload:
+		%AutomaticUploadCheckBox.text = " Activada"
+	else:
+		%AutomaticUploadCheckBox.text = " Desactivada"
+	%AutomaticUploadCheckBox.button_pressed = Config.automatic_upload
+	%CommandEditText.text = Config.command
 
 func book_pressed(button: BaseButton):
 	book_changed.emit(button.get_parent().id)
@@ -99,3 +105,16 @@ func _on_always_on_top_toggled(button_pressed):
 		%AlwaysOnTopCheckBox.text = " Desactivada"
 	Config.always_on_top = button_pressed
 	DisplayServer.window_set_flag(DisplayServer.WindowFlags.WINDOW_FLAG_ALWAYS_ON_TOP, Config.always_on_top)
+
+
+func _on_automatic_upload_toggled(button_pressed):
+	if button_pressed:
+		%AutomaticUploadCheckBox.text = " Activada"
+	else:
+		%AutomaticUploadCheckBox.text = " Desactivada"
+	Config.automatic_upload = button_pressed
+
+
+func _on_command_edit_text_text_changed(new_text : String):
+	if new_text.strip_edges() != Config.command:
+		Config.command = new_text.strip_edges()

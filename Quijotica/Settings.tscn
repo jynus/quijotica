@@ -243,6 +243,64 @@ icon_alignment = 1
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 
+[node name="CommandOption" type="HBoxContainer" parent="ScrollContainer/SettingsContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/SettingsContainer/CommandOption"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="CommandLabel" type="Label" parent="ScrollContainer/SettingsContainer/CommandOption"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Comando opcional:"
+label_settings = SubResource("LabelSettings_igclp")
+vertical_alignment = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="ScrollContainer/SettingsContainer/CommandOption"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="CommandTextEdit" type="HBoxContainer" parent="ScrollContainer/SettingsContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/SettingsContainer/CommandTextEdit"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+
+[node name="CommandEditText" type="LineEdit" parent="ScrollContainer/SettingsContainer/CommandTextEdit"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 150)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 1
+theme_override_colors/font_color = Color(0.956863, 0.956863, 0.956863, 1)
+theme_override_colors/font_placeholder_color = Color(0, 0, 0, 1)
+theme_override_colors/caret_color = Color(0.376471, 0.376471, 0.376471, 1)
+theme_override_colors/selection_color = Color(0, 0, 0, 1)
+theme_override_constants/caret_width = 3
+theme_override_fonts/font = ExtResource("3_17d17")
+theme_override_font_sizes/font_size = 75
+theme_override_styles/normal = SubResource("StyleBoxFlat_i4a5x")
+placeholder_text = "!comando"
+alignment = 1
+max_length = 20
+virtual_keyboard_enabled = false
+deselect_on_focus_loss_enabled = false
+
+[node name="CommandEditLabel" type="Label" parent="ScrollContainer/SettingsContainer/CommandTextEdit"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "  (ej.: !q )"
+label_settings = SubResource("LabelSettings_k26sx")
+vertical_alignment = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="ScrollContainer/SettingsContainer/CommandTextEdit"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+
 [node name="BanTimeOption" type="HBoxContainer" parent="ScrollContainer/SettingsContainer"]
 layout_mode = 2
 
@@ -345,6 +403,53 @@ flat = true
 icon_alignment = 1
 
 [node name="MarginContainer2" type="MarginContainer" parent="ScrollContainer/SettingsContainer/AlwaysOnTopCheckbox"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+
+[node name="AutomaticUloadOption" type="HBoxContainer" parent="ScrollContainer/SettingsContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/SettingsContainer/AutomaticUloadOption"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="AutomaticUploadLabel" type="Label" parent="ScrollContainer/SettingsContainer/AutomaticUloadOption"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Subida automática:"
+label_settings = SubResource("LabelSettings_igclp")
+vertical_alignment = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="ScrollContainer/SettingsContainer/AutomaticUloadOption"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="AutomaticUploadCheckbox" type="HBoxContainer" parent="ScrollContainer/SettingsContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/SettingsContainer/AutomaticUploadCheckbox"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+
+[node name="AutomaticUploadCheckBox" type="CheckBox" parent="ScrollContainer/SettingsContainer/AutomaticUploadCheckbox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_colors/font_color = Color(0.12549, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0.0941176, 0, 1)
+theme_override_colors/font_hover_color = Color(0.270588, 0.0313726, 0.0313726, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.0784314, 0.239216, 0.117647, 1)
+theme_override_fonts/font = ExtResource("3_17d17")
+theme_override_font_sizes/font_size = 75
+theme_override_icons/checked = ExtResource("4_c85y1")
+theme_override_icons/unchecked = ExtResource("5_1j1wg")
+text = " Desactivada"
+flat = true
+icon_alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="ScrollContainer/SettingsContainer/AutomaticUploadCheckbox"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 
@@ -464,7 +569,9 @@ cancel_button_text = "Cancelar"
 [connection signal="drag_started" from="ScrollContainer/SettingsContainer/VolumeSlider/VolumeSlider" to="." method="_on_volume_slider_drag_started"]
 [connection signal="value_changed" from="ScrollContainer/SettingsContainer/VolumeSlider/VolumeSlider" to="." method="_on_volume_slider_value_changed"]
 [connection signal="toggled" from="ScrollContainer/SettingsContainer/WriteChatCheckbox/WriteChatCheckBox" to="." method="_on_write_chat_toggled"]
+[connection signal="text_changed" from="ScrollContainer/SettingsContainer/CommandTextEdit/CommandEditText" to="." method="_on_command_edit_text_text_changed"]
 [connection signal="text_changed" from="ScrollContainer/SettingsContainer/BanTimeTextEdit/BanTimeEditText" to="." method="_on_ban_time_changed"]
 [connection signal="toggled" from="ScrollContainer/SettingsContainer/AlwaysOnTopCheckbox/AlwaysOnTopCheckBox" to="." method="_on_always_on_top_toggled"]
+[connection signal="toggled" from="ScrollContainer/SettingsContainer/AutomaticUploadCheckbox/AutomaticUploadCheckBox" to="." method="_on_automatic_upload_toggled"]
 [connection signal="pressed" from="ScrollContainer/SettingsContainer/ResetButton/ResetButton" to="." method="_on_reset_button_pressed"]
 [connection signal="confirmed" from="ConfirmationDialog" to="." method="_on_deletion_dialog_confirmed"]

@@ -6,6 +6,8 @@ var volume : float = 50
 var chat_enabled : bool = true
 var ban_time : int = 30
 var always_on_top : bool = false
+var automatic_upload : bool = false
+var command : String = ""
 
 var path : String = "user://quijotica.config"
 
@@ -82,6 +84,8 @@ func load_options():
 	chat_enabled = options_dict.chat_enabled if "chat_enabled" in options_dict else true
 	ban_time = options_dict.ban_time if "ban_time" in options_dict else 30
 	always_on_top = options_dict.always_on_top if "always_on_top" in options_dict else false
+	automatic_upload = options_dict.automatic_upload if "automatic_upload" in options_dict else false
+	command = options_dict.command if "command" in options_dict else ""
 
 	print("Loaded game options from file.")
 
@@ -92,7 +96,9 @@ func save_options():
 		"volume": volume,
 		"chat_enabled": chat_enabled,
 		"ban_time": ban_time,
-		"always_on_top": always_on_top
+		"always_on_top": always_on_top,
+		"automatic_upload": automatic_upload,
+		"command": command
 	}
 	var options_file = FileAccess.open(path, FileAccess.WRITE)
 	var json_string = JSON.stringify(save_dict)

@@ -41,14 +41,7 @@ var letter_simplifications : Dictionary = {
 	"ç": "c"
 }
 
-enum ban_reason {SPELLING, TOO_LATE, TOO_SOON, DID_NOT_APOLOGIZE}
-
-var problematic_users : Dictionary = {
-	"ezoniev": false,
-	"montxaldre": false
-}
-
-const APOLOGIZE_TEXT = "@jynus perdón por los timeouts no justificados"
+enum ban_reason {SPELLING, TOO_LATE, TOO_SOON, WRONG_COMMAND}
 
 var banned_users : Dictionary = {}
 
@@ -56,6 +49,7 @@ signal correct_word
 signal old_word
 signal early_word
 signal misspelled_word
+signal wrong_command
 signal text_loaded
 
 func format_integer(number: int, thousands_separator: String = " ") -> String:
@@ -146,9 +140,11 @@ func quijotica_loop():
 
 		await correct_word
 		Stats.word_count += 1
-		
+
 		if Stats.word_count % 100 == 0:
 			Stats.save_state(Config.current_book)
+			if Config.automatic_upload:
+				%Ranking.upload_data()
 		if large_window:
 			animation_player.play("correct_word_2")
 			await animation_player.animation_finished
@@ -246,7 +242,7 @@ func _on_gift_joined_chatroom():
 		"melenitasdev":
 			%User.text = "Esperando TikToks ..."
 		"afor_digital":
-			%User.text = "Esperando formularios de contacto ..."
+			%User.text = "Esperando formulario de contacto ..."
 		"niv3k_el_pato":
 			%User.text = "Esperando patitos ..."
 		"papajoshhh":
@@ -258,7 +254,7 @@ func _on_gift_joined_chatroom():
 		"algebrodev":
 			%User.text = "Esperando que cargue Unity ..."
 		"catisa":
-			%User.text = "Esperando siguiente release de FromSoftware ..."
+			%User.text = "Esperando release de FromSoftware ..."
 		"ransilftw":
 			%User.text = "Esperando a la Nintendo Direct ..."
 		"sailorfu":
@@ -266,15 +262,20 @@ func _on_gift_joined_chatroom():
 		"altaskur":
 			%User.text = "Haciendo async/await en el chat ..."
 		"carmenpilar26":
-			%User.text = "Esperando siguiente release de FromSoftware ..."
+			%User.text = "Esperando release de FromSoftware ..."
 		"lascosicasdejoserra":
 			%User.text = "Esperando panes ..."
+		"outconsumer":
+			%User.text = "Esperando wokes ..."
 		_:
 			%User.text = "Aguardando ruines ..."
 
 	%start_menu.hide()
 	await get_tree().create_timer(2).timeout
-	chat("Hola! 👋 Soy Quijótica. Vamos por " + str(Stats.word_count) + " de " + str(Stats.total_words) + " palabras. Comandos: !quijótica !palabras .")
+	var command_text : String = ""
+	if Config.command != "":
+		command_text = " El comando es " + Config.command + " ."
+	chat("Hola! 👋 Soy Quijótica. Vamos por " + str(Stats.word_count) + " de " + str(Stats.total_words) + " palabras. Comandos: !quijótica !palabras !clasificación ." + command_text)
 	correct_word_timestamp = Time.get_unix_time_from_system()
 
 func simplify_word(word : String) -> String:
@@ -307,10 +308,11 @@ func ban_or_ignore(user: String, reason: ban_reason):
 			%User.text = "✖ " + user
 			%User.label_settings.font_color = Color(0.5, 0.5, 0.5)
 			chat("@" + user + " ❌ demasiado tarde! 🏃")
-		ban_reason.DID_NOT_APOLOGIZE:
-			%User.text = "🫤 " + user
-			%User.label_settings.font_color = Color(0.8, 0, 0.8)
-			chat("@" + user + " ❌ no te has disculpado todavía 🙏")
+		ban_reason.WRONG_COMMAND:
+			%User.text = "✖ " + user
+			%User.label_settings.font_color = Color(1, 0.4, 0.4)
+			chat("@" + user + " ❌ comando inválido! 🛑")
+
 	banned_users[user.to_lower()] = timestamp + Config.ban_time
 
 func _on_gift_chat_message(sender_data, message):
@@ -318,15 +320,37 @@ func _on_gift_chat_message(sender_data, message):
 		return
 	var user : String = sender_data.tags["display-name"]
 	var timestamp : int = Time.get_unix_time_from_system()
+	var command_text : String = ""
+	if message == "!quijótica":
+		if Config.command != "":
+			command_text = " El comando es " + Config.command + " ."
+		chat("Escribe la palabra que ves en pantalla. Si te equivocas no podrás escribir durante " + str(Config.ban_time) + " segundos." + command_text)
+		return
+	if message == "!palabras":
+		var words : int = 0
+		var errors : int = 0
+		if user in Stats.users:
+			words = Stats.users[user]["words"]
+			errors = Stats.users[user]["errors"]
+		chat("@" + user + " tienes " + str(words) + " palabras correctas y " + str(errors) + " errores.")
+		return
+	if message == "!clasificación":
+		var top_users = Stats.get_top_users_by_words(3)
+		if len(top_users) == 0:
+			chat("No hay ningún usuario que haya escrito ninguna palabra todavía.")
+			return
+		var text : String = "Los usuarios con más palabras son: "
+		for top_user in top_users:
+			text += top_user["user"] + " (" + str(top_user["value"]) + ") "
+		chat(text)
+		return
 	if user.to_lower() in banned_users and banned_users[user.to_lower()] > timestamp:
 		return  # user is banned
-	if user.to_lower() in problematic_users and not problematic_users[user.to_lower()]:
-		if message == APOLOGIZE_TEXT:
-			problematic_users[user.to_lower()] = true
-			chat("El magnánimo @jynus te perdona, @" + user + " - vamo a jugá 😜")
+	if Config.command != "":
+		if message.begins_with(Config.command + " "):
+			message = message.substr(len(Config.command) + 1, -1).strip_edges()
 		else:
-			ban_or_ignore(user, ban_reason.DID_NOT_APOLOGIZE)
-		return
+			return  # ignore words not starting with the custom command
 	if message == word:
 		var current_timestamp : float = Time.get_unix_time_from_system()
 		correct_word.emit()
@@ -359,15 +383,10 @@ func _on_gift_chat_message(sender_data, message):
 		ban_or_ignore(user, ban_reason.SPELLING)
 		add_mistake(user)
 		return
-	if message == "!quijótica":
-		chat("Escribe la palabra que ves en pantalla. Si te equivocas no podrás escribir durante " + str(Config.ban_time) + " segundos.")
-		return
-	if message == "!palabras":
-		var words : int = 0
-		if user in Stats.users:
-			words = Stats.users[user]["words"]
-		chat("@" + user + " tienes " + str(words) + " palabras correctas.")
-		return
+	if Config.command != "":
+		wrong_command.emit()
+		ban_or_ignore(user, ban_reason.WRONG_COMMAND)
+		add_mistake(user)
 
 func _exit():
 	print("Exiting normally...")

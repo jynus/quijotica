@@ -19,14 +19,14 @@ func get_all_users_in_order_of_appearance() -> Array:
 		top_users.insert(0, {"user": user, "value": users[user]["words"]})
 	return top_users
 
-func get_top_users_by_words() -> Array:
+func get_top_users_by_words(max : int = MAX_USERS) -> Array:
 	var top_users : Array = []
 	for user in users:
 		top_users.append({"user": user, "value": users[user]["words"]})
 	top_users.sort_custom(compare_by_value_inverse)
-	return top_users.slice(0, MAX_USERS)
+	return top_users.slice(0, max)
 
-func get_top_users_by_speed() -> Array:
+func get_top_users_by_speed(max : int = MAX_USERS) -> Array:
 	var top_users : Array = []
 	for user in users:
 		if users[user]["words"] != 0:
@@ -35,9 +35,9 @@ func get_top_users_by_speed() -> Array:
 	top_users.sort_custom(compare_by_value)
 	for user in top_users:
 		user["value"] = float_format(user["value"]) + "s"
-	return top_users.slice(0, MAX_USERS)
+	return top_users.slice(0, max)
 
-func get_top_users_by_accuracy() -> Array:
+func get_top_users_by_accuracy(max : int = MAX_USERS) -> Array:
 	var top_users : Array = []
 	for user in users:
 		if users[user]["errors"] > 0 or users[user]["words"] >= MIN_WORDS_FOR_ACCURACY:
@@ -45,14 +45,14 @@ func get_top_users_by_accuracy() -> Array:
 	top_users.sort_custom(compare_by_value_inverse)
 	for user in top_users:
 		user["value"] = pct_format(user["value"])
-	return top_users.slice(0, MAX_USERS)
+	return top_users.slice(0, max)
 
-func get_top_users_by_errors() -> Array:
+func get_top_users_by_errors(max : int = MAX_USERS) -> Array:
 	var top_users : Array = []
 	for user in users:
 		top_users.append({"user": user, "value": users[user]["errors"]})
 	top_users.sort_custom(compare_by_value_inverse)
-	return top_users.slice(0, MAX_USERS)
+	return top_users.slice(0, max)
 
 func pct_format(value: float) -> String:
 	return float_format(value) + " %"

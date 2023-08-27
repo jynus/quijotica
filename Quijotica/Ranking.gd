@@ -6,6 +6,9 @@ var rankings_url : String = "https://jynus.com/quijotica/"
 var line_template : PackedScene = preload("res://ranking_line.tscn")
 var closed_icon : Texture2D = preload("res://assets/closed_dot.png")
 var open_icon : Texture2D = preload("res://assets/open_dot.png")
+
+var was_manual_upload : bool = false
+
 @onready var rankings: Array[Dictionary] = [
 	{"node": %TopWords, "function": Stats.get_top_users_by_words},
 	{"node": %Faster, "function": Stats.get_top_users_by_speed},
@@ -80,7 +83,10 @@ func _on_page_5_button_pressed():
 
 func _on_share_button_pressed():
 	%ShareButton.disabled = true
-	
+	was_manual_upload = true
+	upload_data()
+
+func upload_data():
 	var http_dict = Stats.get_global_status("dictionary")
 	http_dict["streamer"] = $"../Gift".username
 	http_dict["book"] = Config.current_book
@@ -96,7 +102,9 @@ func _on_share_button_pressed():
 func _on_http_request_request_completed(result, response_code, headers, body):
 	%ShareButton.disabled = false
 	print_debug(response_code)
-	if response_code == 200:
-		OS.shell_open(rankings_url)
-	else:
-		$FaileduploadDialog.show()
+	if was_manual_upload:
+		was_manual_upload = false
+		if response_code == 200:
+			OS.shell_open(rankings_url)
+		else:
+			$FaileduploadDialog.show()
