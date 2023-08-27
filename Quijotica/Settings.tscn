@@ -558,7 +558,7 @@ unique_name_in_owner = true
 title = "Confirmar borrado..."
 initial_position = 2
 ok_button_text = "Borrar todo"
-dialog_text = "ATENCIÓN: ¡Esta acción no se puede deshacer! ¿Deseas borrar los datos de Quijótica de tu conexión a Twitch, la caché y todo el progreso de todos los libros?
+dialog_text = "ATENCIÓN: ¡Esta acción es difícil de deshacer! ¿Deseas mover a la papelera del sistema los datos de Quijótica de tu conexión a Twitch, los textos descargados, la configuración y todo el progreso de todos los libros?
 
 La conexión se cerrará y tendrás que volver a autenticarte si quieres seguir jugando. No afectará en nada a tus datos o a tu canal de Twitch."
 cancel_button_text = "Cancelar"

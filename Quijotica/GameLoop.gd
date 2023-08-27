@@ -454,8 +454,21 @@ func _on_reset_all_data():
 		connected = false
 	#await gift.left_chatroom
 	remove_child(gift)
-	print("About to move to trash directory: " + OS.get_user_data_dir())
-	OS.move_to_trash(OS.get_user_data_dir())
+	print("About to move files to trash directory: " + OS.get_user_data_dir())
+	if OS.get_name() == "Windows":
+		var dir = DirAccess.open(OS.get_user_data_dir())
+		if dir:
+			dir.list_dir_begin()
+			var file_name = dir.get_next()
+			while file_name != "":
+				if file_name.ends_with(".progress") or file_name.ends_with(".config") or file_name.ends_with(".txt"):
+					print_debug("Removing " + file_name + " ...")
+					OS.move_to_trash(OS.get_user_data_dir() + "/" + file_name)
+				file_name = dir.get_next()
+			print_debug("Removing user_token ...")
+			OS.move_to_trash(OS.get_user_data_dir() + "/gift/auth/user_token")
+	else:
+		OS.move_to_trash(OS.get_user_data_dir())
 	await get_tree().create_timer(0.5).timeout
 	print("Launching new game instance...")
 	#OS.execute(OS.get_executable_path(), OS.get_cmdline_args())
