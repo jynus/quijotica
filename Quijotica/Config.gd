@@ -67,6 +67,14 @@ var book_list : Dictionary = {
 		"background": "res://assets/the_button.png",
 		"title": "The Butt-onica",
 		"conectar": "Apretar"
+	},
+	"chipi_chipi": {
+		"name": "Chipi chipi",
+		"image": "res://assets/chipi_back.png",
+		"music": "res://assets/chipi-chipi-chapa-chapa.mp3",
+		"background": "res://assets/chipi.png",
+		"title": "Chipi chipi",
+		"conectar": "Chipi chipi"
 	}
 }
 

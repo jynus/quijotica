@@ -245,7 +245,7 @@ func _on_gift_joined_chatroom():
 	var username : String = %Gift.username.to_lower()
 	match username:
 		"isaacsanchez_art":
-			%User.text = "Esperant malparits ..."
+			%User.text = "Chipi chipi ... ?"
 		"rothiotome":
 			%User.text = "Esperando colgajos ..."
 		"psuzume":
